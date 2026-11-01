@@ -13,3 +13,4 @@
 - 2026-11-01 — v2.4: Señales regionales interactivas (control de periodo, celdas y puntos explorables con cursor o teclado) con datos en public/data/senales.json; la prueba de filtros usa un ranking fijo.
 - 2026-11-01 — v2.5: se documenta el proceso completo desde la maqueta en docs/PROCESO.md y se enlaza desde README y PROMPT_BASE.
 - 2026-11-01 — v2.6: gráfica «Actividad por semana» rediseñada (8 ranuras fijas, ejes y guías, barras de ancho máximo, valores compactos).
+- 2026-11-01 — Semana 2026-W43 regenerada a petición de la autora (primera ejecución de prueba; se borró y se volvió a generar para incluir eBird).
