@@ -9,7 +9,7 @@ React 19, TypeScript, TanStack Router/Start, Tailwind CSS v4, zod. Construido co
 Ver [docs/PROMPT_BASE.md](docs/PROMPT_BASE.md).
 
 ## URL pública
-[pendiente]
+https://lovable.dev/preview/Rz0rRK6MbnupQbdc01Y0FGXk0o2NntX5
 
 ## Cómo actualizar los datos
 Todo el contenido vive en `public/data/`:
