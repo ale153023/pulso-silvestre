@@ -1,0 +1,38 @@
+[
+  {
+    "id": "aves",
+    "nombre": "Aves",
+    "orden": 1,
+    "color": "cafe"
+  },
+  {
+    "id": "mamiferos",
+    "nombre": "Mamíferos",
+    "orden": 2,
+    "color": "lima"
+  },
+  {
+    "id": "reptiles",
+    "nombre": "Reptiles",
+    "orden": 3,
+    "color": "naranja"
+  },
+  {
+    "id": "anfibios",
+    "nombre": "Anfibios",
+    "orden": 4,
+    "color": "oliva"
+  },
+  {
+    "id": "peces",
+    "nombre": "Peces",
+    "orden": 5,
+    "color": "lima"
+  },
+  {
+    "id": "insectos",
+    "nombre": "Insectos",
+    "orden": 6,
+    "color": "cafe"
+  }
+]
