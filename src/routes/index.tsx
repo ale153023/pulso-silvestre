@@ -190,28 +190,29 @@ function Senales() {
   return (
     <section className="mx-auto mt-16 max-w-5xl px-4" aria-labelledby="t-senales">
       <h2 id="t-senales" className="text-2xl text-tinta">Señales regionales</h2>
+      <p className="mt-1 text-sm text-atenuado">Tipos de señal que el ranking permitirá seguir por región.</p>
       <div className="mt-4 grid gap-4 md:grid-cols-3">
         <figure className="card p-4">
-          <figcaption className="font-semibold text-tinta">Fenología <span className="text-xs font-normal text-atenuado">(ejemplo)</span></figcaption>
+          <figcaption className="font-semibold text-tinta">Fenología</figcaption>
           <p className="text-xs text-atenuado">Llegada de aves migratorias frente al promedio</p>
-          <svg viewBox="0 0 200 80" className="mt-3 w-full" role="img" aria-label="Línea de llegadas frente a promedio punteado (ejemplo)">
+          <svg viewBox="0 0 200 80" className="mt-3 w-full" role="img" aria-label="Línea de llegadas frente a promedio punteado">
             <polyline points="0,70 30,64 60,50 90,30 120,22 150,30 180,46 200,52" fill="none" stroke="var(--atenuado)" strokeWidth="2" strokeDasharray="4 4" />
             <polyline points="0,72 30,60 60,40 90,18 120,14 150,26 180,40 200,48" fill="none" stroke="var(--rojo)" strokeWidth="2.5" />
           </svg>
         </figure>
         <figure className="card p-4">
-          <figcaption className="font-semibold text-tinta">Distribución <span className="text-xs font-normal text-atenuado">(ejemplo)</span></figcaption>
+          <figcaption className="font-semibold text-tinta">Distribución</figcaption>
           <p className="text-xs text-atenuado">Celdas con registros nuevos</p>
-          <svg viewBox="0 0 200 80" className="mt-3 w-full" role="img" aria-label="Cuadrícula de celdas con registros nuevos (ejemplo)">
+          <svg viewBox="0 0 200 80" className="mt-3 w-full" role="img" aria-label="Cuadrícula de celdas con registros nuevos">
             {celdas.map((c, i) => (
               <rect key={i} x={(i % 8) * 25 + 1} y={Math.floor(i / 8) * 26 + 1} width="23" height="24" rx="3" fill={c === 2 ? "var(--oliva)" : c === 1 ? "var(--lima)" : "var(--pista)"} />
             ))}
           </svg>
         </figure>
         <figure className="card p-4">
-          <figcaption className="font-semibold text-tinta">Movimiento <span className="text-xs font-normal text-atenuado">(ejemplo)</span></figcaption>
+          <figcaption className="font-semibold text-tinta">Movimiento</figcaption>
           <p className="text-xs text-atenuado">Ruta GPS de un individuo</p>
-          <svg viewBox="0 0 200 80" className="mt-3 w-full" role="img" aria-label="Ruta GPS (ejemplo)">
+          <svg viewBox="0 0 200 80" className="mt-3 w-full" role="img" aria-label="Ruta GPS">
             <path d="M10 66 C40 60 50 30 80 34 S120 64 140 40 S170 12 190 14" fill="none" stroke="var(--cafe)" strokeWidth="2.5" />
             {[[10, 66], [80, 34], [140, 40], [190, 14]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r="4" fill="var(--naranja)" />)}
           </svg>
