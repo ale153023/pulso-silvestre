@@ -8,7 +8,11 @@ Directorio de bases de datos abiertas de fauna silvestre (observación, rastreo,
 React 19, TypeScript, TanStack Router/Start, Tailwind CSS v4, zod. Construido con Lovable.
 
 ## Prompts utilizados
-Ver [docs/PROMPT_BASE.md](docs/PROMPT_BASE.md).
+- **Documento maestro** de construcción y actualización: [docs/PROMPT_BASE.md](docs/PROMPT_BASE.md) (Rol, Tarea, Contexto, Restricciones).
+- **Proceso completo** desde la primera idea y el maquetado hasta el sitio publicado, con las decisiones, los prompts clave de la autora, el uso de IA y lo que se verificó: [docs/PROCESO.md](docs/PROCESO.md).
+
+## Proceso de desarrollo (resumen)
+1. Idea y viabilidad → 2. alcance con solo datos abiertos → 3. tecnología y rúbrica (sitio estático) → 4. maquetado de tres pantallas (panal, carrusel, paletas) → 5. índice fijo calculado al cierre de la semana → 6. metaprompt y documento maestro → 7. construcción inicial en Lovable → 8. repositorio y publicación en Vercel → 9. auditoría y correcciones → 10. datos reales y flujo semanal (métrica de actividad) → 11. nuevo alcance, paleta azul y crema y señales interactivas. El detalle de cada etapa está en [docs/PROCESO.md](docs/PROCESO.md).
 
 ## URL pública
 <https://pulso-silvestre.vercel.app/>
