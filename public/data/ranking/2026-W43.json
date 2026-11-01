@@ -5,74 +5,74 @@
     "fin": "2026-10-25",
     "etiqueta": "Semana del 19 al 25 de octubre de 2026"
   },
-  "metodoVersion": 1,
+  "metodoVersion": 2,
   "cerrada": true,
-  "datosIlustrativos": true,
-  "generadoEn": "2026-10-26T06:00:00Z",
+  "datosIlustrativos": false,
+  "generadoEn": "2026-11-01T03:35:16Z",
   "items": [
     {
-      "baseId": "ebird",
-      "posicion": 1,
-      "consultas": 1000,
-      "indice": 100,
-      "variacionPct": 18,
-      "estado": "ok"
-    },
-    {
-      "baseId": "movebank",
-      "posicion": 2,
-      "consultas": 860,
-      "indice": 86,
-      "variacionPct": 12,
-      "estado": "ok"
-    },
-    {
       "baseId": "gbif-mx",
-      "posicion": 3,
-      "consultas": 700,
-      "indice": 70,
-      "variacionPct": 9,
-      "estado": "ok"
-    },
-    {
-      "baseId": "xeno-canto",
-      "posicion": 4,
-      "consultas": 580,
-      "indice": 58,
-      "variacionPct": 7,
-      "estado": "ok"
-    },
-    {
-      "baseId": "wildlife-insights",
-      "posicion": 5,
-      "consultas": 460,
-      "indice": 46,
-      "variacionPct": 5,
-      "estado": "ok"
-    },
-    {
-      "baseId": "globi",
-      "posicion": 6,
-      "consultas": 380,
-      "indice": 38,
-      "variacionPct": 4,
-      "estado": "ok"
-    },
-    {
-      "baseId": "lila-bc",
-      "posicion": 7,
-      "consultas": 300,
-      "indice": 30,
-      "variacionPct": -3,
-      "estado": "ok"
+      "posicion": 1,
+      "consultas": 3061563,
+      "indice": 100,
+      "variacionPct": null,
+      "estado": "nuevo"
     },
     {
       "baseId": "naturalista-mx",
-      "posicion": 8,
-      "consultas": 220,
-      "indice": 22,
-      "variacionPct": 1,
-      "estado": "ok"
+      "posicion": 2,
+      "consultas": 22066,
+      "indice": 1,
+      "variacionPct": null,
+      "estado": "nuevo"
+    },
+    {
+      "baseId": "ebird",
+      "posicion": null,
+      "consultas": null,
+      "indice": null,
+      "variacionPct": null,
+      "estado": "sin_dato"
+    },
+    {
+      "baseId": "movebank",
+      "posicion": null,
+      "consultas": null,
+      "indice": null,
+      "variacionPct": null,
+      "estado": "sin_dato"
+    },
+    {
+      "baseId": "xeno-canto",
+      "posicion": null,
+      "consultas": null,
+      "indice": null,
+      "variacionPct": null,
+      "estado": "sin_dato"
+    },
+    {
+      "baseId": "wildlife-insights",
+      "posicion": null,
+      "consultas": null,
+      "indice": null,
+      "variacionPct": null,
+      "estado": "sin_dato"
+    },
+    {
+      "baseId": "globi",
+      "posicion": null,
+      "consultas": null,
+      "indice": null,
+      "variacionPct": null,
+      "estado": "sin_dato"
+    },
+    {
+      "baseId": "lila-bc",
+      "posicion": null,
+      "consultas": null,
+      "indice": null,
+      "variacionPct": null,
+      "estado": "sin_dato"
     }
   ]
 }
