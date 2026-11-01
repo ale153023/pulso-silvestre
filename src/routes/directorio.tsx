@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Estado, TarjetaBase, btnContorno, campo } from "@/components/silvestre";
 import { useDatos, type Cobertura, type Datos } from "@/lib/data";
-import { REGIONES, filtrarBases, tiposUnicos, type Filtros, type Orden } from "@/lib/filtros";
+import { accesosUnicos, conteos, filtrarBases, regionesPresentes, tiposUnicos, type Filtros, type Orden } from "@/lib/filtros";
 import { ACCESO } from "@/lib/formato";
 
 interface Busqueda {
@@ -63,6 +63,7 @@ function Contenido({ d }: { d: Datos }) {
   const limpiar = () => navigate({ search: {}, replace: true });
   const res = filtrarBases(d.bases, d.ranking, f);
   const tipos = tiposUnicos(d.bases);
+  const n = conteos(d.bases, f);
   const chip = (activo: boolean) =>
     `min-h-11 rounded-full px-4 text-sm font-medium ${activo ? "bg-grad-cafe text-blanco shadow-btn" : "border border-campo bg-card text-texto2 hover:bg-tinte"}`;
 
@@ -76,24 +77,24 @@ function Contenido({ d }: { d: Datos }) {
           </label>
           <label className="grid gap-1 text-sm font-medium text-texto2">Región
             <select className={campo} value={f.region} onChange={(e) => set({ region: e.target.value })}>
-              {REGIONES.map((r) => <option key={r.id} value={r.id}>{r.nombre}</option>)}
+              {regionesPresentes(d.bases).map((r) => <option key={r.id} value={r.id}>{r.nombre} ({n.region[r.id] ?? 0})</option>)}
             </select>
           </label>
           <fieldset>
             <legend className="text-sm font-medium text-texto2">Grupo</legend>
             {d.grupos.map((g) => (
               <label key={g.id} className="flex min-h-11 items-center gap-2 text-sm text-tinta">
-                <input type="checkbox" className="h-5 w-5 accent-cafe" checked={f.grupo.includes(g.id)} onChange={() => set({ grupo: toggle(f.grupo, g.id) })} />
-                {g.nombre}
+                <input type="checkbox" className="h-5 w-5 accent-cafe" checked={f.grupo.includes(g.id)} disabled={!f.grupo.includes(g.id) && !n.grupo[g.id]} onChange={() => set({ grupo: toggle(f.grupo, g.id) })} />
+                {g.nombre} <span className="font-mono text-xs text-atenuado">({n.grupo[g.id] ?? 0})</span>
               </label>
             ))}
           </fieldset>
           <fieldset>
             <legend className="text-sm font-medium text-texto2">Acceso</legend>
-            {(["api", "descarga"] as const).map((a) => (
+            {accesosUnicos(d.bases).map((a) => (
               <label key={a} className="flex min-h-11 items-center gap-2 text-sm text-tinta">
-                <input type="checkbox" className="h-5 w-5 accent-cafe" checked={f.acceso.includes(a)} onChange={() => set({ acceso: toggle(f.acceso, a) })} />
-                {ACCESO[a]}
+                <input type="checkbox" className="h-5 w-5 accent-cafe" checked={f.acceso.includes(a)} disabled={!f.acceso.includes(a) && !n.acceso[a]} onChange={() => set({ acceso: toggle(f.acceso, a) })} />
+                {ACCESO[a] ?? a} <span className="font-mono text-xs text-atenuado">({n.acceso[a] ?? 0})</span>
               </label>
             ))}
           </fieldset>
@@ -104,7 +105,7 @@ function Contenido({ d }: { d: Datos }) {
           <div role="group" aria-label="Tipo de dato" className="flex flex-wrap gap-2">
             <button type="button" aria-pressed={!f.tipo} className={chip(!f.tipo)} onClick={() => set({ tipo: undefined })}>Todos</button>
             {tipos.map((t) => (
-              <button key={t} type="button" aria-pressed={f.tipo === t} className={chip(f.tipo === t)} onClick={() => set({ tipo: t })}>{t}</button>
+              <button key={t} type="button" aria-pressed={f.tipo === t} disabled={f.tipo !== t && !n.tipo[t]} className={`${chip(f.tipo === t)} disabled:opacity-40`} onClick={() => set({ tipo: t })}>{t} ({n.tipo[t] ?? 0})</button>
             ))}
           </div>
           <div className="mt-4 flex flex-wrap items-end justify-between gap-3">

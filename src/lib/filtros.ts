@@ -24,18 +24,41 @@ export function tiposUnicos(bases: Base[]): string[] {
   return [...new Set(bases.map((b) => b.tipo))].sort((a, b) => a.localeCompare(b, "es"));
 }
 
+export function coincide(b: Base, f: Filtros, omitir?: "grupo" | "tipo" | "region" | "acceso"): boolean {
+  const q = normalizar(f.q.trim());
+  return (
+    (omitir === "region" || NIVEL[b.cobertura] >= NIVEL[f.region]) &&
+    (omitir === "grupo" || f.grupo.length === 0 || b.grupos.some((g) => f.grupo.includes(g))) &&
+    (omitir === "acceso" || f.acceso.length === 0 || b.acceso.some((a) => f.acceso.includes(a))) &&
+    (omitir === "tipo" || !f.tipo || b.tipo === f.tipo) &&
+    (!q || normalizar(`${b.nombre} ${b.fuente} ${b.descripcion}`).includes(q))
+  );
+}
+
+/** Opciones únicas presentes en los datos (nada fijo en el código). */
+export const accesosUnicos = (bases: Base[]): string[] => [...new Set(bases.flatMap((b) => b.acceso))].sort();
+export const regionesPresentes = (bases: Base[]) =>
+  REGIONES.filter((r) => bases.some((b) => b.cobertura === r.id));
+
+/** Conteo por opción, aplicando todos los demás filtros (facetas dinámicas). */
+export function conteos(bases: Base[], f: Filtros) {
+  const grupo: Record<string, number> = {};
+  const acceso: Record<string, number> = {};
+  const tipo: Record<string, number> = {};
+  const region: Record<string, number> = {};
+  for (const b of bases) {
+    if (coincide(b, f, "grupo")) b.grupos.forEach((g) => (grupo[g] = (grupo[g] ?? 0) + 1));
+    if (coincide(b, f, "acceso")) b.acceso.forEach((a) => (acceso[a] = (acceso[a] ?? 0) + 1));
+    if (coincide(b, f, "tipo")) tipo[b.tipo] = (tipo[b.tipo] ?? 0) + 1;
+    for (const r of REGIONES) if (NIVEL[b.cobertura] >= NIVEL[r.id] && coincide(b, f, "region")) region[r.id] = (region[r.id] ?? 0) + 1;
+  }
+  return { grupo, acceso, tipo, region };
+}
+
 /** Filtra y ordena; solo lee la posición publicada, nunca la calcula. */
 export function filtrarBases(bases: Base[], ranking: Ranking, f: Filtros): Base[] {
-  const q = normalizar(f.q.trim());
   const pos = new Map(ranking.items.map((i) => [i.baseId, i.posicion ?? null]));
-  const res = bases.filter(
-    (b) =>
-      NIVEL[b.cobertura] >= NIVEL[f.region] &&
-      (f.grupo.length === 0 || b.grupos.some((g) => f.grupo.includes(g))) &&
-      (f.acceso.length === 0 || b.acceso.some((a) => f.acceso.includes(a))) &&
-      (!f.tipo || b.tipo === f.tipo) &&
-      (!q || normalizar(`${b.nombre} ${b.fuente} ${b.descripcion}`).includes(q)),
-  );
+  const res = bases.filter((b) => coincide(b, f));
   return res.sort((a, b) => {
     if (f.orden === "az") return a.nombre.localeCompare(b.nombre, "es");
     if (f.orden === "reciente") return b.actualizadoEn.localeCompare(a.actualizadoEn);
