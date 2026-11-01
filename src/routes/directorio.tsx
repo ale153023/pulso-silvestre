@@ -5,24 +5,24 @@ import { REGIONES, filtrarBases, tiposUnicos, type Filtros, type Orden } from "@
 import { ACCESO } from "@/lib/formato";
 
 interface Busqueda {
-  grupo?: string;
-  tipo?: string;
-  region?: string;
-  acceso?: string;
-  q?: string;
-  orden?: string;
+  grupo?: string | undefined;
+  tipo?: string | undefined;
+  region?: string | undefined;
+  acceso?: string | undefined;
+  q?: string | undefined;
+  orden?: string | undefined;
 }
 
 const str = (v: unknown) => (typeof v === "string" && v ? v : undefined);
 
 export const Route = createFileRoute("/directorio")({
   validateSearch: (s: Record<string, unknown>): Busqueda => ({
-    grupo: str(s.grupo),
-    tipo: str(s.tipo),
-    region: str(s.region),
-    acceso: str(s.acceso),
-    q: str(s.q),
-    orden: str(s.orden),
+    grupo: str(s["grupo"]),
+    tipo: str(s["tipo"]),
+    region: str(s["region"]),
+    acceso: str(s["acceso"]),
+    q: str(s["q"]),
+    orden: str(s["orden"]),
   }),
   head: () => ({
     meta: [
