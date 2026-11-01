@@ -17,6 +17,7 @@ Este documento registra cómo se llegó al proyecto actual, desde la idea hasta 
 | 9 | Auditoría | Imágenes, fichas reales, filtros dinámicos, citas, carga en servidor, accesibilidad |
 | 10 | Datos reales | Cambio de «consultas» a «actividad semanal» y flujo automático semanal |
 | 11 | Alcance, paleta e interactividad | Nuevo título y enfoque, paleta azul y crema, señales regionales interactivas |
+| 12 | Murciélagos y abejas de Norteamérica | Tres bases estadounidenses abiertas y dos recortes de iNaturalist para el pulso |
 
 ## 1. Idea y viabilidad
 La primera consulta fue si era viable una página que permitiera ver las bases de datos más buscadas cada semana en ciertos sitios, con interés particular en comportamiento animal, y si había una forma más amable de plantearlo. Se concluyó que era viable como **directorio con señales semanales**, no como un buscador propio.
@@ -85,6 +86,14 @@ Pregunta de la autora: ¿se puede basar genuinamente en datos reales? Hallazgo: 
 - Como la métrica ya no es de consultas, se **redefinió el alcance**: directorio de fuentes abiertas con un pulso semanal de actividad. Cambiaron título, navegación («Actividad semanal»), descripciones, README y documento base.
 - Cambio de paleta a azul y crema: `010736, 0D1C42, 22396F, FCF1D0` (con verdes lima y oliva), con contraste verificado a nivel AA. Los nombres de token (`cafe`, `rojo`, `naranja`) se conservaron por compatibilidad.
 - **Señales regionales interactivas** (fenología con control de periodo, distribución con celdas explorables, movimiento con puntos de la ruta), con datos en `public/data/senales.json`.
+
+## 12. Murciélagos y abejas de Norteamérica
+La autora propuso sumar bases elaboradas en Estados Unidos sobre murciélagos y abejas. Se revisó la documentación de cada una:
+- **NABat** (USGS): entrega de grabaciones acústicas, CC0, con manifiesto CSV; se publica por versiones.
+- **Bumble Bee Watch** (Xerces Society y socios): registros fotográficos de abejorros verificados, CC0 vía GBIF.
+- **Native Bee Inventory and Monitoring Lab** (USGS): registros de abejas y otros insectos, accesibles desde GBIF; la licencia no se indica en su página.
+
+Hallazgo: las tres se actualizan por entregas, no semana a semana, así que no sirven para un pulso semanal. Decisión (entre tres alternativas): agregarlas al directorio con fichas reales (región Norteamérica, métrica «Pendiente de conectar») y medir el pulso de los dos grupos con **recortes de iNaturalist** (murciélagos y abejas en Estados Unidos, Canadá y México). Los recortes no son bases nuevas; se declaran como tales y comparten los límites de NaturaLista (solape, esfuerzo de observación). Las nuevas bases entran al pulso desde la siguiente semana cerrada.
 
 ## Cómo se trabajó con IA
 - **Claude** (conversación y Claude Code): análisis de viabilidad, maqueta, metaprompt, auditoría de código, redacción de documentación, script de datos y cambios al repositorio.

@@ -25,8 +25,10 @@ La métrica es la **actividad semanal**: registros nuevos que cada fuente public
 | GBIF · nodo México | Ocurrencias de animales en México interpretadas por GBIF en la semana | Nada |
 | NaturaLista · CONABIO | Observaciones de fauna creadas en México durante la semana | Nada |
 | eBird | Listas de verificación enviadas en México (suma de 7 días) | Clave `EBIRD_API_KEY` |
+| iNaturalist · murciélagos y abejas (recortes) | Observaciones creadas cada semana en Estados Unidos, Canadá y México del orden Chiroptera y del clado Anthophila (suma de los tres países; el script verifica el taxón y los lugares antes de contar) | Nada |
 | Xeno-canto | Pendiente de conectar (su API pide clave y falta validar el filtro por fecha) | — |
 | Movebank, Wildlife Insights, GloBI, LILA BC | Sin métrica pública abierta: aparecen como «Sin dato esta semana» | — |
+| NABat (murciélagos), Bumble Bee Watch (abejorros) y Native Bee Inventory (abejas) | Se publican por entregas periódicas, no semana a semana: aparecen en el directorio como «Pendiente de conectar» | — |
 
 Las unidades difieren entre fuentes (listas, observaciones, ocurrencias); el índice compara actividad dentro de la misma semana y no equivale a «más importante». Una fuente que no responde queda como «Sin dato» y no detiene a las demás. `anomalia` marca cambios de más de 5 veces frente a la semana previa (por ejemplo, un reprocesamiento masivo).
 
@@ -42,8 +44,8 @@ Estas limitaciones también se resumen en `docs/PROMPT_BASE.md` (sección 4.6) p
 
 1. **Mide aportes, no consultas.** Ninguna de las 8 bases publica vistas o descargas semanales. El pulso semanal refleja cuántos registros nuevos entran a cada fuente, no cuánta gente la usa.
 2. **Las unidades no son iguales.** eBird cuenta listas de verificación; NaturaLista, observaciones; GBIF, ocurrencias. Una lista de eBird puede contener decenas de registros de especies. Por eso el índice (100 × actividad ÷ líder) solo sirve para ordenar y comparar dentro de una misma semana y **no** indica qué fuente es más importante ni más grande. Decisión vigente: mantener las unidades propias de cada fuente y declararlo; la alternativa evaluada (índice relativo a la mediana de cada fuente) queda como mejora futura porque necesita 4 semanas acumuladas.
-3. **Las fuentes no son independientes.** Parte de lo que publica eBird y NaturaLista llega también a GBIF, de modo que sus conteos se solapan y no deben sumarse.
-4. **Cobertura parcial.** Con los datos disponibles hoy el pulso semanal incluye como máximo 3 de 8 bases (GBIF México, NaturaLista y eBird, esta última solo con clave). Xeno-canto está pendiente de conectar; Movebank, Wildlife Insights, GloBI y LILA BC no tienen métrica pública abierta y aparecen como «Sin dato esta semana».
+3. **Las fuentes no son independientes.** Parte de lo que publica eBird y NaturaLista llega también a GBIF, de modo que sus conteos se solapan y no deben sumarse. Lo mismo pasa con los recortes de iNaturalist (murciélagos y abejas): incluyen las observaciones de México, que también cuenta NaturaLista, y Bumble Bee Watch y el Native Bee Inventory se publican además en GBIF.
+4. **Cobertura parcial.** Con los datos disponibles hoy el pulso semanal incluye como máximo 5 de 13 bases (GBIF México, NaturaLista, los dos recortes de iNaturalist y eBird, esta última solo con clave). Xeno-canto está pendiente de conectar; Movebank, Wildlife Insights, GloBI y LILA BC no tienen métrica pública abierta y aparecen como «Sin dato esta semana».
 5. **GBIF puede dar picos artificiales.** Se cuenta la fecha en que GBIF interpretó cada registro; si reprocesa un conjunto grande, el conteo se dispara sin que haya más actividad. Esos casos (más de 5 veces la semana previa) se marcan como `anomalia` y se muestran con «—». Además, consultar después una semana pasada puede dar otra cifra, por eso cada semana se guarda al cerrarse y no se recalcula.
 6. **NaturaLista:** se cuentan observaciones de fauna creadas en México (lugar 6793 de la red iNaturalist); las eliminadas u ocultadas después no se descuentan de semanas ya cerradas.
 7. **eBird:** exige clave personal y cuenta listas enviadas, no especies ni individuos. Sin la clave queda como «Sin dato».
@@ -75,6 +77,10 @@ Los campos, usos y licencias de cada ficha (`public/data/bases.json`) se tomaron
 | GloBI | Según el origen del dato | <https://www.globalbioticinteractions.org> |
 | LILA BC | Mayormente CDLA permisiva; algunos conjuntos con términos propios | <https://source.coop/agentmorris/lila-wildlife> |
 | NaturaLista · CONABIO | Según el observador | <https://www.naturalista.mx> |
+| NABat · USGS (acústica de murciélagos) | CC0 1.0 | <https://www.usgs.gov/data/north-american-bat-monitoring-program-nabat-acoustic-data-release> |
+| Bumble Bee Watch · Xerces Society y socios | CC0 1.0 vía GBIF; política de uso del proyecto | <https://www.bumblebeewatch.org/metadata> y <https://www.gbif.org/dataset/f1a4ce9a-97cd-4d35-bf5e-561f2f1c6d91> |
+| Native Bee Inventory and Monitoring Lab · USGS | No indicada en la página del laboratorio; ver la del conjunto en GBIF | <https://www.usgs.gov/tools/native-bee-inventory-and-monitoring-lab-biml> |
+| iNaturalist (recortes de murciélagos y abejas) | Según el observador | <https://www.inaturalist.org> |
 
 ## Imágenes
 Las 8 imágenes de `public/img/` son ilustraciones originales del proyecto. Para sustituirlas por fotografías, cambia `foto` y `credito` en `bases.json` (usa solo imágenes con licencia abierta y cita al autor).
