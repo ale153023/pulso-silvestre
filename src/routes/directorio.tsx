@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Estado, TarjetaBase, btnContorno, campo } from "@/components/silvestre";
-import { useDatos, type Cobertura, type Datos } from "@/lib/data";
+import { cargarDatos, type Cobertura, type Datos } from "@/lib/data";
 import { accesosUnicos, conteos, filtrarBases, regionesPresentes, tiposUnicos, type Filtros, type Orden } from "@/lib/filtros";
 import { ACCESO } from "@/lib/formato";
 
@@ -32,13 +32,14 @@ export const Route = createFileRoute("/directorio")({
       { property: "og:description", content: "Bases de datos abiertas de fauna silvestre filtrables por grupo, región, tipo y acceso." },
     ],
   }),
+  loader: () => cargarDatos(),
+  pendingComponent: () => <Estado cargando error={null} />,
+  errorComponent: ({ error }) => <Estado cargando={false} error={error} />,
   component: Directorio,
 });
 
 function Directorio() {
-  const q = useDatos();
-  if (!q.data) return <Estado cargando={q.isPending} error={q.error} />;
-  return <Contenido d={q.data} />;
+  return <Contenido d={Route.useLoaderData()} />;
 }
 
 const lista = (v?: string) => (v ? v.split(",").filter(Boolean) : []);

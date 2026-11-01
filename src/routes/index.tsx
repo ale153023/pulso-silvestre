@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, type CSSProperties } from "react";
 import { Estado, Foto, Variacion, btnPrimario, campo } from "@/components/silvestre";
-import { useDatos, type Datos, type Grupo } from "@/lib/data";
+import { cargarDatos, type Datos, type Grupo } from "@/lib/data";
 import { REGIONES, tiposUnicos } from "@/lib/filtros";
 import type { Cobertura } from "@/lib/data";
 
@@ -14,13 +14,14 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Ranking semanal de bases de datos abiertas de fauna silvestre, construido solo con fuentes abiertas." },
     ],
   }),
+  loader: () => cargarDatos(),
+  pendingComponent: () => <Estado cargando error={null} />,
+  errorComponent: ({ error }) => <Estado cargando={false} error={error} />,
   component: Inicio,
 });
 
 function Inicio() {
-  const q = useDatos();
-  if (!q.data) return <Estado cargando={q.isPending} error={q.error} />;
-  return <Contenido d={q.data} />;
+  return <Contenido d={Route.useLoaderData()} />;
 }
 
 function Contenido({ d }: { d: Datos }) {

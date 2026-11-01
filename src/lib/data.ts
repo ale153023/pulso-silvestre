@@ -61,10 +61,22 @@ export type Ranking = z.infer<typeof rankingSchema>;
 export type Cobertura = z.infer<typeof coberturaSchema>;
 export type Historial = z.infer<typeof historialSchema>;
 
+// En el servidor (SSR) los JSON se leen del propio proyecto: no hay origen al cual hacer fetch.
+// En el navegador se piden con fetch y sin caché, como indica el contrato de datos.
+const jsonLocales = import.meta.glob("../../public/data/**/*.json", { import: "default" });
+
 async function getJson<T>(path: string, schema: z.ZodType<T>): Promise<T> {
-  const res = await fetch(`${import.meta.env.BASE_URL}data/${path}`, { cache: "no-cache" });
-  if (!res.ok) throw new Error(`No se pudo cargar ${path} (${res.status})`);
-  const parsed = schema.safeParse(await res.json());
+  let crudo: unknown;
+  if (import.meta.env.SSR) {
+    const leer = jsonLocales[`../../public/data/${path}`];
+    if (!leer) throw new Error(`No se encontró ${path}`);
+    crudo = await leer();
+  } else {
+    const res = await fetch(`${import.meta.env.BASE_URL}data/${path}`, { cache: "no-cache" });
+    if (!res.ok) throw new Error(`No se pudo cargar ${path} (${res.status})`);
+    crudo = await res.json();
+  }
+  const parsed = schema.safeParse(crudo);
   if (!parsed.success) throw new Error(`Formato inválido en ${path}`);
   return parsed.data;
 }

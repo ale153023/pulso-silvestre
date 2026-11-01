@@ -1,25 +1,31 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Chip, Estado, Foto, Variacion, btnContorno, btnPrimario, useIrASeccion } from "@/components/silvestre";
-import { itemDe, useDatos, type Datos } from "@/lib/data";
+import { cargarDatos, itemDe, type Datos } from "@/lib/data";
 import { etiquetaGrupos, relacionadas } from "@/lib/filtros";
 import { ACCESO, COBERTURA, METRICA, fmtCorta, fmtFecha, fmtNum } from "@/lib/formato";
 
 export const Route = createFileRoute("/base/$id")({
-  head: () => ({
-    meta: [
-      { title: "Ficha de base de datos · Pulso Silvestre" },
-      { name: "description", content: "Consultas semanales, contenido, licencia y forma de citar una base de datos abierta de fauna." },
-      { property: "og:title", content: "Ficha de base de datos · Pulso Silvestre" },
-      { property: "og:description", content: "Detalle de una base de datos abierta de fauna silvestre." },
-    ],
-  }),
+  head: ({ loaderData, params }) => {
+    const b = loaderData?.bases.find((x) => x.id === params.id);
+    const titulo = b ? `${b.nombre} · Pulso Silvestre` : "Ficha de base de datos · Pulso Silvestre";
+    const desc = b?.descripcion ?? "Consultas semanales, contenido, licencia y forma de citar una base de datos abierta de fauna.";
+    return {
+      meta: [
+        { title: titulo },
+        { name: "description", content: desc },
+        { property: "og:title", content: titulo },
+        { property: "og:description", content: desc },
+      ],
+    };
+  },
+  loader: () => cargarDatos(),
+  pendingComponent: () => <Estado cargando error={null} />,
+  errorComponent: ({ error }) => <Estado cargando={false} error={error} />,
   component: Ficha,
 });
 
 function Ficha() {
-  const q = useDatos();
-  if (!q.data) return <Estado cargando={q.isPending} error={q.error} />;
-  return <Contenido d={q.data} />;
+  return <Contenido d={Route.useLoaderData()} />;
 }
 
 function NoEncontrada() {
