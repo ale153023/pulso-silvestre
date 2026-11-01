@@ -54,6 +54,7 @@ Todo el contenido vive en `public/data/`:
 - `bases.json`: fichas de cada base.
 - `ranking/index.json`: semana más reciente (`ultima`) y lista de semanas.
 - `ranking/AAAA-Www.json`: ranking de una semana cerrada. Índice, posición y variación se calculan al generar el archivo (con el script), nunca en el navegador. El campo `consultas` conserva su nombre por compatibilidad y contiene la actividad semanal.
+- `senales.json`: datos de las tres tarjetas interactivas de «Señales regionales» (ilustrativos hasta que existan series reales; la nota visible sale del campo `nota`).
 - `historial.json`: actividad por semana (hasta 8) por base; se acumula desde la primera ejecución real.
 Registra cada cambio manual en `CHANGELOG.md`.
 

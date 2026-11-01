@@ -49,6 +49,23 @@ export const rankingSchema = z.object({
   items: z.array(itemSchema),
 });
 
+export const senalesSchema = z.object({
+  datosIlustrativos: z.boolean(),
+  nota: z.string(),
+  fenologia: z.object({
+    titulo: z.string(), descripcion: z.string(), unidad: z.string(),
+    etiquetas: z.array(z.string()), actual: z.array(z.number()), promedio: z.array(z.number()),
+  }),
+  distribucion: z.object({
+    titulo: z.string(), descripcion: z.string(), columnas: z.number(),
+    niveles: z.array(z.string()), celdas: z.array(z.number()),
+  }),
+  movimiento: z.object({
+    titulo: z.string(), descripcion: z.string(), trayectoria: z.string(),
+    puntos: z.array(z.object({ x: z.number(), y: z.number(), etiqueta: z.string(), detalle: z.string() })),
+  }),
+});
+
 const indexSchema = z.object({ ultima: z.string(), semanas: z.array(z.string()) });
 const historialSchema = z.record(
   z.array(z.object({ semana: z.string(), inicio: z.string(), consultas: z.number() })),
@@ -60,6 +77,7 @@ export type Item = z.infer<typeof itemSchema>;
 export type Ranking = z.infer<typeof rankingSchema>;
 export type Cobertura = z.infer<typeof coberturaSchema>;
 export type Historial = z.infer<typeof historialSchema>;
+export type Senales = z.infer<typeof senalesSchema>;
 
 // En el servidor (SSR) los JSON se leen del propio proyecto: no hay origen al cual hacer fetch.
 // En el navegador se piden con fetch y sin caché, como indica el contrato de datos.
@@ -86,17 +104,19 @@ export interface Datos {
   bases: Base[];
   ranking: Ranking;
   historial: Historial;
+  senales: Senales;
 }
 
 export async function cargarDatos(): Promise<Datos> {
-  const [grupos, bases, index, historial] = await Promise.all([
+  const [grupos, bases, index, historial, senales] = await Promise.all([
     getJson("grupos.json", z.array(grupoSchema)),
     getJson("bases.json", z.array(baseSchema)),
     getJson("ranking/index.json", indexSchema),
     getJson("historial.json", historialSchema),
+    getJson("senales.json", senalesSchema),
   ]);
   const ranking = await getJson(`ranking/${index.ultima}.json`, rankingSchema);
-  return { grupos: [...grupos].sort((a, b) => a.orden - b.orden), bases, ranking, historial };
+  return { grupos: [...grupos].sort((a, b) => a.orden - b.orden), bases, ranking, historial, senales };
 }
 
 export function useDatos() {

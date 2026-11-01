@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, type CSSProperties } from "react";
 import { Estado, Foto, Variacion, btnPrimario, campo } from "@/components/silvestre";
-import { cargarDatos, type Datos, type Grupo } from "@/lib/data";
+import { cargarDatos, type Datos, type Grupo, type Senales } from "@/lib/data";
 import { REGIONES, tiposUnicos } from "@/lib/filtros";
 import type { Cobertura } from "@/lib/data";
 
@@ -43,7 +43,7 @@ function Contenido({ d }: { d: Datos }) {
       <BarraFiltros d={d} />
       <Carrusel d={d} />
       <Metodo />
-      <Senales />
+      <SenalesRegionales s={d.senales} />
     </main>
   );
 }
@@ -185,39 +185,135 @@ function Metodo() {
   );
 }
 
-function Senales() {
-  const celdas = [0, 1, 0, 0, 2, 1, 0, 1, 2, 0, 0, 1, 0, 2, 1, 0, 1, 0, 0, 2, 0, 1, 0, 0];
+const ancho = 200;
+
+function SenalesRegionales({ s }: { s: Senales }) {
   return (
     <section className="mx-auto mt-16 max-w-5xl px-4" aria-labelledby="t-senales">
       <h2 id="t-senales" className="text-2xl text-tinta">Señales regionales</h2>
-      <p className="mt-1 text-sm text-atenuado">Tipos de señal que este pulso semanal permitirá seguir por región.</p>
+      <p className="mt-1 text-sm text-atenuado">{s.nota} Pasa el cursor o usa el teclado para explorarlas.</p>
       <div className="mt-4 grid gap-4 md:grid-cols-3">
-        <figure className="card p-4">
-          <figcaption className="font-semibold text-tinta">Fenología</figcaption>
-          <p className="text-xs text-atenuado">Llegada de aves migratorias frente al promedio</p>
-          <svg viewBox="0 0 200 80" className="mt-3 w-full" role="img" aria-label="Línea de llegadas frente a promedio punteado">
-            <polyline points="0,70 30,64 60,50 90,30 120,22 150,30 180,46 200,52" fill="none" stroke="var(--atenuado)" strokeWidth="2" strokeDasharray="4 4" />
-            <polyline points="0,72 30,60 60,40 90,18 120,14 150,26 180,40 200,48" fill="none" stroke="var(--rojo)" strokeWidth="2.5" />
-          </svg>
-        </figure>
-        <figure className="card p-4">
-          <figcaption className="font-semibold text-tinta">Distribución</figcaption>
-          <p className="text-xs text-atenuado">Celdas con registros nuevos</p>
-          <svg viewBox="0 0 200 80" className="mt-3 w-full" role="img" aria-label="Cuadrícula de celdas con registros nuevos">
-            {celdas.map((c, i) => (
-              <rect key={i} x={(i % 8) * 25 + 1} y={Math.floor(i / 8) * 26 + 1} width="23" height="24" rx="3" fill={c === 2 ? "var(--oliva)" : c === 1 ? "var(--lima)" : "var(--pista)"} />
-            ))}
-          </svg>
-        </figure>
-        <figure className="card p-4">
-          <figcaption className="font-semibold text-tinta">Movimiento</figcaption>
-          <p className="text-xs text-atenuado">Ruta GPS de un individuo</p>
-          <svg viewBox="0 0 200 80" className="mt-3 w-full" role="img" aria-label="Ruta GPS">
-            <path d="M10 66 C40 60 50 30 80 34 S120 64 140 40 S170 12 190 14" fill="none" stroke="var(--cafe)" strokeWidth="2.5" />
-            {[[10, 66], [80, 34], [140, 40], [190, 14]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r="4" fill="var(--naranja)" />)}
-          </svg>
-        </figure>
+        <Fenologia f={s.fenologia} />
+        <Distribucion d={s.distribucion} />
+        <Movimiento m={s.movimiento} />
       </div>
     </section>
+  );
+}
+
+function Fenologia({ f }: { f: Senales["fenologia"] }) {
+  const n = Math.min(f.etiquetas.length, f.actual.length, f.promedio.length);
+  const [i, setI] = useState(Math.max(0, n - 1 - Math.floor(n / 3)));
+  if (n < 2) return null;
+  const max = Math.max(1, ...f.actual.slice(0, n), ...f.promedio.slice(0, n));
+  const x = (k: number) => (k * ancho) / (n - 1);
+  const y = (v: number) => 74 - (v / max) * 68;
+  const linea = (vals: number[]) => vals.slice(0, n).map((v, k) => `${x(k)},${y(v)}`).join(" ");
+  const dif = f.actual[i]! - f.promedio[i]!;
+  return (
+    <figure className="card p-4">
+      <figcaption className="font-semibold text-tinta">{f.titulo}</figcaption>
+      <p className="text-xs text-atenuado">{f.descripcion}</p>
+      <svg
+        viewBox="0 0 200 80"
+        className="mt-3 w-full touch-none"
+        aria-hidden="true"
+        onPointerMove={(e) => {
+          const r = e.currentTarget.getBoundingClientRect();
+          setI(Math.min(n - 1, Math.max(0, Math.round(((e.clientX - r.left) / r.width) * (n - 1)))));
+        }}
+      >
+        <polyline points={linea(f.promedio)} fill="none" stroke="var(--atenuado)" strokeWidth="2" strokeDasharray="4 4" />
+        <polyline points={linea(f.actual)} fill="none" stroke="var(--rojo)" strokeWidth="2.5" />
+        <line x1={x(i)} x2={x(i)} y1="2" y2="78" stroke="var(--campo)" strokeWidth="1" />
+        <circle cx={x(i)} cy={y(f.actual[i]!)} r="4" fill="var(--rojo)" />
+        <circle cx={x(i)} cy={y(f.promedio[i]!)} r="3.5" fill="var(--blanco)" stroke="var(--atenuado)" strokeWidth="2" />
+      </svg>
+      <label className="mt-2 grid gap-1 text-xs font-medium text-texto2">Periodo
+        <input type="range" min={0} max={n - 1} value={i} onChange={(e) => setI(Number(e.target.value))} className="accent-cafe" />
+      </label>
+      <p aria-live="polite" className="mt-2 font-mono text-xs text-texto2">
+        {f.etiquetas[i]}: {f.actual[i]} {f.unidad} · promedio {f.promedio[i]} ({dif >= 0 ? "+" : ""}{dif})
+      </p>
+    </figure>
+  );
+}
+
+function Distribucion({ d }: { d: Senales["distribucion"] }) {
+  const [sel, setSel] = useState<number | null>(null);
+  const color = ["var(--pista)", "var(--lima)", "var(--oliva)"];
+  const filas = Math.ceil(d.celdas.length / d.columnas);
+  const nombre = (k: number) => `Fila ${Math.floor(k / d.columnas) + 1}, columna ${(k % d.columnas) + 1}`;
+  return (
+    <figure className="card p-4">
+      <figcaption className="font-semibold text-tinta">{d.titulo}</figcaption>
+      <p className="text-xs text-atenuado">{d.descripcion}</p>
+      <div className="mt-3 grid gap-1" style={{ gridTemplateColumns: `repeat(${d.columnas}, minmax(0, 1fr))` }} role="group" aria-label={`Cuadrícula de ${filas} filas por ${d.columnas} columnas`}>
+        {d.celdas.map((c, k) => (
+          <button
+            key={k}
+            type="button"
+            aria-label={`${nombre(k)}: ${d.niveles[c] ?? "sin dato"}`}
+            aria-pressed={sel === k}
+            onMouseEnter={() => setSel(k)}
+            onFocus={() => setSel(k)}
+            onClick={() => setSel(k)}
+            className={`aspect-square min-h-8 rounded-md transition-transform hover:scale-110 ${sel === k ? "ring-2 ring-cafe ring-offset-1" : ""}`}
+            style={{ background: color[c] ?? color[0] }}
+          />
+        ))}
+      </div>
+      <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs text-atenuado">
+        {d.niveles.map((n, k) => (
+          <li key={n} className="flex items-center gap-1"><span className="inline-block h-3 w-3 rounded-sm" style={{ background: color[k] }} aria-hidden="true" />{n}</li>
+        ))}
+      </ul>
+      <p aria-live="polite" className="mt-2 min-h-8 font-mono text-xs text-texto2">
+        {sel === null ? "Elige una celda para ver su detalle." : `${nombre(sel)}: ${d.niveles[d.celdas[sel]!] ?? "sin dato"}`}
+      </p>
+    </figure>
+  );
+}
+
+function Movimiento({ m }: { m: Senales["movimiento"] }) {
+  const [i, setI] = useState(0);
+  const p = m.puntos[i];
+  if (!p) return null;
+  return (
+    <figure className="card p-4">
+      <figcaption className="font-semibold text-tinta">{m.titulo}</figcaption>
+      <p className="text-xs text-atenuado">{m.descripcion}</p>
+      <svg viewBox="0 0 200 80" className="mt-3 w-full" aria-hidden="true">
+        <path d={m.trayectoria} fill="none" stroke="var(--cafe)" strokeWidth="2.5" />
+        {m.puntos.map((q, k) => (
+          <circle
+            key={k}
+            cx={q.x}
+            cy={q.y}
+            r={k === i ? 6 : 4}
+            fill={k === i ? "var(--cafe)" : "var(--lima)"}
+            stroke="var(--cafe)"
+            strokeWidth="2"
+            className="cursor-pointer"
+            onMouseEnter={() => setI(k)}
+            onClick={() => setI(k)}
+          />
+        ))}
+      </svg>
+      <div role="group" aria-label="Puntos de la ruta" className="mt-2 flex flex-wrap gap-1.5">
+        {m.puntos.map((q, k) => (
+          <button
+            key={k}
+            type="button"
+            aria-pressed={k === i}
+            onClick={() => setI(k)}
+            className={`min-h-11 rounded-full px-3 text-xs font-medium ${k === i ? "bg-grad-cafe text-blanco shadow-btn" : "border border-campo bg-card text-texto2 hover:bg-tinte"}`}
+          >
+            {q.etiqueta}
+          </button>
+        ))}
+      </div>
+      <p aria-live="polite" className="mt-2 font-mono text-xs text-texto2">{p.etiqueta}: {p.detalle}</p>
+    </figure>
   );
 }

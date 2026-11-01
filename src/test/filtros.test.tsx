@@ -1,11 +1,21 @@
 import { describe, expect, it } from "vitest";
 import bases from "../../public/data/bases.json";
-import ranking from "../../public/data/ranking/2026-W43.json";
 import { filtrarBases, type Filtros } from "@/lib/filtros";
 import type { Base, Ranking } from "@/lib/data";
 
 const B = bases as Base[];
-const R = ranking as Ranking;
+// Ranking de prueba fijo: no depende de las semanas reales que publique el flujo semanal.
+const R = {
+  semana: { id: "2026-W00", inicio: "2026-01-01", fin: "2026-01-07", etiqueta: "Prueba" },
+  metodoVersion: 2,
+  cerrada: true,
+  datosIlustrativos: true,
+  generadoEn: "2026-01-08T00:00:00Z",
+  items: [
+    { baseId: "ebird", posicion: 1, consultas: 1000, indice: 100, variacionPct: null, estado: "nuevo" },
+    { baseId: "movebank", posicion: 2, consultas: 860, indice: 86, variacionPct: null, estado: "nuevo" },
+  ],
+} as Ranking;
 const f = (p: Partial<Filtros>): Filtros => ({ grupo: [], tipo: "", region: "mexico", acceso: [], q: "", orden: "consultas", ...p });
 
 describe("filtros del directorio", () => {

@@ -1,0 +1,30 @@
+{
+  "datosIlustrativos": true,
+  "nota": "Ejemplos ilustrativos de las señales que este pulso semanal permitirá seguir por región.",
+  "fenologia": {
+    "titulo": "Fenología",
+    "descripcion": "Llegada de aves migratorias frente al promedio",
+    "unidad": "aves migratorias registradas",
+    "etiquetas": ["Semana 1", "Semana 2", "Semana 3", "Semana 4", "Semana 5", "Semana 6", "Semana 7", "Semana 8"],
+    "actual": [8, 20, 40, 62, 66, 54, 40, 32],
+    "promedio": [10, 16, 30, 50, 58, 50, 34, 28]
+  },
+  "distribucion": {
+    "titulo": "Distribución",
+    "descripcion": "Celdas con registros nuevos",
+    "columnas": 8,
+    "niveles": ["Sin registros nuevos", "Algunos registros nuevos", "Muchos registros nuevos"],
+    "celdas": [0, 1, 0, 0, 2, 1, 0, 1, 2, 0, 0, 1, 0, 2, 1, 0, 1, 0, 0, 2, 0, 1, 0, 0]
+  },
+  "movimiento": {
+    "titulo": "Movimiento",
+    "descripcion": "Ruta GPS de un individuo",
+    "trayectoria": "M10 66 C40 60 50 30 80 34 S120 64 140 40 S170 12 190 14",
+    "puntos": [
+      { "x": 10, "y": 66, "etiqueta": "Inicio", "detalle": "Primer registro de la marca GPS." },
+      { "x": 80, "y": 34, "etiqueta": "Parada 1", "detalle": "El individuo se detiene a alimentarse." },
+      { "x": 140, "y": 40, "etiqueta": "Parada 2", "detalle": "Cruza hacia una zona más abierta." },
+      { "x": 190, "y": 14, "etiqueta": "Fin", "detalle": "Último registro del periodo." }
+    ]
+  }
+}
