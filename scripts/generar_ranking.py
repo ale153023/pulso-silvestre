@@ -101,11 +101,38 @@ def ebird(inicio: dt.date, fin: dt.date) -> int:
     return total
 
 
+# Lugares de Norteamérica en la red iNaturalist: place_id -> fragmento esperado del nombre.
+LUGARES_NORTEAMERICA = {1: "united states", 6712: "canada", 6793: "xico"}
+
+
+def inat_taxon(taxon_id: int, nombre: str) -> Callable[[dt.date, dt.date], int]:
+    """Observaciones de un grupo taxonómico creadas en EE. UU., Canadá y México durante la semana.
+    Antes de contar verifica que el taxón y los lugares sean los esperados."""
+    def contar(inicio: dt.date, fin: dt.date) -> int:
+        taxon = _get_json(f"https://api.inaturalist.org/v1/taxa/{taxon_id}")["results"][0]
+        if taxon.get("name") != nombre:
+            raise RuntimeError(f"taxon_id {taxon_id} ya no es {nombre}: {taxon.get('name')}")
+        total = 0
+        for place_id, esperado in LUGARES_NORTEAMERICA.items():
+            lugar = _get_json(f"https://api.inaturalist.org/v1/places/{place_id}")["results"][0]
+            if esperado not in f"{lugar.get('name', '')} {lugar.get('display_name', '')}".lower():
+                raise RuntimeError(f"place_id {place_id} ya no es '{esperado}': {lugar.get('name')}")
+            q = urllib.parse.urlencode({
+                "place_id": place_id, "taxon_id": taxon_id, "per_page": 0,
+                "created_d1": inicio.isoformat(), "created_d2": fin.isoformat(),
+            })
+            total += int(_get_json(f"https://api.inaturalist.org/v1/observations?{q}")["total_results"])
+        return total
+    return contar
+
+
 # Bases sin adaptador aparecen como "sin_dato": no hay métrica pública y abierta que medir.
 ADAPTADORES: dict[str, Callable[[dt.date, dt.date], int]] = {
     "gbif-mx": gbif_mx,
     "naturalista-mx": naturalista_mx,
     "ebird": ebird,
+    "inat-murcielagos": inat_taxon(40268, "Chiroptera"),
+    "inat-abejas": inat_taxon(630955, "Anthophila"),
 }
 
 

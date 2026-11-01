@@ -20,10 +20,16 @@ const f = (p: Partial<Filtros>): Filtros => ({ grupo: [], tipo: "", region: "mex
 
 describe("filtros del directorio", () => {
   it("México muestra todas las bases (región jerárquica)", () => {
-    expect(filtrarBases(B, R, f({})).length).toBe(8);
+    expect(filtrarBases(B, R, f({})).length).toBe(B.length);
   });
   it("Mundial excluye las bases solo de México", () => {
     expect(filtrarBases(B, R, f({ region: "mundial" })).map((b) => b.id)).not.toContain("gbif-mx");
+  });
+  it("Norteamérica incluye las bases norteamericanas y mundiales, no las solo de México", () => {
+    const ids = filtrarBases(B, R, f({ region: "norteamerica" })).map((b) => b.id);
+    expect(ids).toContain("nabat");
+    expect(ids).toContain("ebird");
+    expect(ids).not.toContain("gbif-mx");
   });
   it("búsqueda ignora acentos y mayúsculas", () => {
     expect(filtrarBases(B, R, f({ q: "MEXICO" })).map((b) => b.id)).toContain("gbif-mx");

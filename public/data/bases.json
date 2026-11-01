@@ -448,5 +448,247 @@
     ],
     "foto": "/img/naturalista-mx.svg",
     "credito": "Ilustración original del proyecto"
+  },
+  {
+    "id": "nabat",
+    "nombre": "Grabaciones acústicas de murciélagos",
+    "fuente": "NABat · USGS Fort Collins Science Center",
+    "tipo": "Audio",
+    "grupos": [
+      "mamiferos"
+    ],
+    "cobertura": "norteamerica",
+    "descripcion": "Grabaciones acústicas de murciélagos aportadas por socios del Programa de Monitoreo de Murciélagos de Norteamérica, con metadatos y especie sugerida.",
+    "acceso": [
+      "descarga"
+    ],
+    "accesoTexto": "Descarga directa (archivos sueltos o por script)",
+    "licencia": "CC0 1.0 (dominio público)",
+    "metrica": "pendiente",
+    "actualizadoEn": "2026-10-15",
+    "url": "https://doi.org/10.5066/P1HDZNY9",
+    "fotoSugerida": "murciélago en vuelo",
+    "campos": [
+      {
+        "nombre": "Grabación acústica",
+        "descripcion": "Archivo de audio de cada detección, con metadatos incrustados"
+      },
+      {
+        "nombre": "Especie sugerida",
+        "descripcion": "Etiqueta de un clasificador automático, de un revisor manual o de ambos"
+      },
+      {
+        "nombre": "Manifiesto",
+        "descripcion": "Tabla CSV con los metadatos de cada archivo, fechada por versión"
+      },
+      {
+        "nombre": "Sitio de monitoreo",
+        "descripcion": "Datos del sitio y del muestreo aportados por cada socio"
+      }
+    ],
+    "usos": [
+      "Entrenar y validar clasificadores acústicos de especies de murciélagos.",
+      "Revisar dónde y cuándo se detectan murciélagos en sitios de monitoreo de Norteamérica.",
+      "Comparar la etiqueta automática con la del revisor para medir la confiabilidad de la identificación."
+    ],
+    "foto": "/img/nabat.svg",
+    "credito": "Ilustración original del proyecto"
+  },
+  {
+    "id": "bumble-bee-watch",
+    "nombre": "Registros fotográficos de abejorros",
+    "fuente": "Bumble Bee Watch · Xerces Society y socios",
+    "tipo": "Observaciones",
+    "grupos": [
+      "insectos"
+    ],
+    "cobertura": "norteamerica",
+    "descripcion": "Registros con fotografía de abejorros (Bombus) enviados por personas voluntarias y verificados por especialistas, en Estados Unidos y Canadá.",
+    "acceso": [
+      "api",
+      "descarga"
+    ],
+    "accesoTexto": "Descarga y API a través de GBIF",
+    "licencia": "CC0 1.0 (dominio público); respeta la política de uso de datos del proyecto",
+    "metrica": "pendiente",
+    "actualizadoEn": "2026-10-31",
+    "url": "https://www.bumblebeewatch.org",
+    "fotoSugerida": "abejorro sobre una flor",
+    "campos": [
+      {
+        "nombre": "Especie y estado",
+        "descripcion": "Taxonomía del registro y su estado: verificado, pendiente o inválido"
+      },
+      {
+        "nombre": "Fecha y lugar",
+        "descripcion": "Fecha de observación, localidad, coordenadas y su precisión"
+      },
+      {
+        "nombre": "Esfuerzo de muestreo",
+        "descripcion": "Tipo de muestreo, área, horas, número de personas y condiciones del tiempo"
+      },
+      {
+        "nombre": "Hábitat y manejo",
+        "descripcion": "Tipo de hábitat, recursos florales y de anidación, y prácticas de manejo"
+      },
+      {
+        "nombre": "Plantas visitadas",
+        "descripcion": "Hasta 15 plantas con nombre común y científico"
+      }
+    ],
+    "usos": [
+      "Seguir la distribución de especies de abejorros en Norteamérica con registros verificados.",
+      "Relacionar la presencia de abejorros con las plantas que visitan y con el hábitat.",
+      "Complementar monitoreos de polinizadores con observaciones de ciencia ciudadana."
+    ],
+    "foto": "/img/bumble-bee-watch.svg",
+    "credito": "Ilustración original del proyecto"
+  },
+  {
+    "id": "biml",
+    "nombre": "Registros de abejas nativas",
+    "fuente": "Native Bee Inventory and Monitoring Lab · USGS",
+    "tipo": "Colecciones",
+    "grupos": [
+      "insectos"
+    ],
+    "cobertura": "norteamerica",
+    "descripcion": "Registros de especies de abejas nativas y no nativas, avispas y otros insectos, colectados con trampas y red en Norteamérica y otras regiones.",
+    "acceso": [
+      "descarga"
+    ],
+    "accesoTexto": "Descarga desde GBIF",
+    "licencia": "No indicada en la página del laboratorio; revisa la del conjunto en GBIF",
+    "metrica": "pendiente",
+    "actualizadoEn": "2026-10-31",
+    "url": "https://www.usgs.gov/tools/native-bee-inventory-and-monitoring-lab-biml",
+    "fotoSugerida": "abeja nativa",
+    "campos": [
+      {
+        "nombre": "Especie",
+        "descripcion": "Ocurrencias de abejas nativas y no nativas, avispas y otros insectos"
+      },
+      {
+        "nombre": "Método de colecta",
+        "descripcion": "Trampas de platos, Malaise y de aletas (vane), o red entomológica"
+      },
+      {
+        "nombre": "Cobertura geográfica",
+        "descripcion": "Canadá, México, Estados Unidos no contiguo, Islas Vírgenes de EE. UU. y otras regiones"
+      }
+    ],
+    "usos": [
+      "Consultar qué especies de abejas se han inventariado en una región.",
+      "Complementar inventarios de polinizadores con registros de colecta en campo.",
+      "Identificar vacíos de muestreo de abejas nativas."
+    ],
+    "foto": "/img/biml.svg",
+    "credito": "Ilustración original del proyecto"
+  },
+  {
+    "id": "inat-murcielagos",
+    "nombre": "Observaciones de murciélagos (recorte de iNaturalist)",
+    "fuente": "iNaturalist · red de ciencia ciudadana",
+    "tipo": "Observaciones",
+    "grupos": [
+      "mamiferos"
+    ],
+    "cobertura": "norteamerica",
+    "descripcion": "Recorte de iNaturalist: observaciones de murciélagos (orden Chiroptera) en Estados Unidos, Canadá y México; se usa para el pulso semanal del grupo.",
+    "acceso": [
+      "api"
+    ],
+    "accesoTexto": "API abierta",
+    "licencia": "Según el observador",
+    "metrica": "registros_nuevos",
+    "actualizadoEn": "2026-10-31",
+    "url": "https://www.inaturalist.org",
+    "fotoSugerida": "murciélago en vuelo",
+    "campos": [
+      {
+        "nombre": "Taxón",
+        "descripcion": "Especie identificada por la comunidad"
+      },
+      {
+        "nombre": "Fecha de observación",
+        "descripcion": "Cuándo se registró"
+      },
+      {
+        "nombre": "Ubicación",
+        "descripcion": "Coordenadas y descripción del lugar"
+      },
+      {
+        "nombre": "Grado de calidad",
+        "descripcion": "Casual, necesita identificación o grado de investigación"
+      },
+      {
+        "nombre": "Fotos y sonidos",
+        "descripcion": "Evidencia que respalda cada observación"
+      },
+      {
+        "nombre": "Observador y licencia",
+        "descripcion": "Persona que aporta el registro y licencia que eligió"
+      }
+    ],
+    "usos": [
+      "Seguir cuántas observaciones nuevas llegan cada semana en Norteamérica.",
+      "Detectar cambios de actividad estacional del grupo.",
+      "Localizar registros con foto para verificar identificaciones."
+    ],
+    "foto": "/img/nabat.svg",
+    "credito": "Ilustración original del proyecto"
+  },
+  {
+    "id": "inat-abejas",
+    "nombre": "Observaciones de abejas (recorte de iNaturalist)",
+    "fuente": "iNaturalist · red de ciencia ciudadana",
+    "tipo": "Observaciones",
+    "grupos": [
+      "insectos"
+    ],
+    "cobertura": "norteamerica",
+    "descripcion": "Recorte de iNaturalist: observaciones de abejas (clado Anthophila) en Estados Unidos, Canadá y México; se usa para el pulso semanal del grupo.",
+    "acceso": [
+      "api"
+    ],
+    "accesoTexto": "API abierta",
+    "licencia": "Según el observador",
+    "metrica": "registros_nuevos",
+    "actualizadoEn": "2026-10-31",
+    "url": "https://www.inaturalist.org",
+    "fotoSugerida": "abeja sobre una flor",
+    "campos": [
+      {
+        "nombre": "Taxón",
+        "descripcion": "Especie identificada por la comunidad"
+      },
+      {
+        "nombre": "Fecha de observación",
+        "descripcion": "Cuándo se registró"
+      },
+      {
+        "nombre": "Ubicación",
+        "descripcion": "Coordenadas y descripción del lugar"
+      },
+      {
+        "nombre": "Grado de calidad",
+        "descripcion": "Casual, necesita identificación o grado de investigación"
+      },
+      {
+        "nombre": "Fotos y sonidos",
+        "descripcion": "Evidencia que respalda cada observación"
+      },
+      {
+        "nombre": "Observador y licencia",
+        "descripcion": "Persona que aporta el registro y licencia que eligió"
+      }
+    ],
+    "usos": [
+      "Seguir cuántas observaciones nuevas llegan cada semana en Norteamérica.",
+      "Detectar cambios de actividad estacional del grupo.",
+      "Localizar registros con foto para verificar identificaciones."
+    ],
+    "foto": "/img/bumble-bee-watch.svg",
+    "credito": "Ilustración original del proyecto"
   }
 ]

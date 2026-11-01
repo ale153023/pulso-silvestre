@@ -88,5 +88,38 @@ class Flujo(unittest.TestCase):
             g.generar(self.d, dt.date(2026, 10, 26), {"a": falla})
 
 
+class Inat(unittest.TestCase):
+    def _falso(self, nombre_taxon="Chiroptera", lugares=None):
+        lugares = lugares or {"1": "United States", "6712": "Canada", "6793": "Mexico"}
+        llamadas = []
+
+        def falso(url, headers=None):
+            llamadas.append(url)
+            if "/v1/taxa/" in url:
+                return {"results": [{"name": nombre_taxon}]}
+            if "/v1/places/" in url:
+                return {"results": [{"name": lugares[url.rsplit("/", 1)[1]]}]}
+            return {"total_results": 10}
+        return falso, llamadas
+
+    def test_suma_tres_paises(self):
+        falso, llamadas = self._falso()
+        original, g._get_json = g._get_json, falso
+        try:
+            self.assertEqual(g.inat_taxon(40268, "Chiroptera")(dt.date(2026, 10, 19), dt.date(2026, 10, 25)), 30)
+        finally:
+            g._get_json = original
+        self.assertEqual(sum("observations?" in u for u in llamadas), 3)
+
+    def test_taxon_o_lugar_incorrecto_falla(self):
+        for falso in (self._falso("Otra cosa")[0], self._falso(lugares={"1": "Narnia", "6712": "Canada", "6793": "Mexico"})[0]):
+            original, g._get_json = g._get_json, falso
+            try:
+                with self.assertRaises(RuntimeError):
+                    g.inat_taxon(40268, "Chiroptera")(dt.date(2026, 10, 19), dt.date(2026, 10, 25))
+            finally:
+                g._get_json = original
+
+
 if __name__ == "__main__":
     unittest.main()
