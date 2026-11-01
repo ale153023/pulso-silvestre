@@ -49,7 +49,9 @@
       "Detectar llegadas y salidas de especies migratorias frente al promedio histórico.",
       "Comparar la presencia de una especie entre regiones y temporadas.",
       "Identificar celdas con registros nuevos que sugieran cambios de distribución."
-    ]
+    ],
+    "foto": "/img/ebird.svg",
+    "credito": "Ilustración original del proyecto (provisional)"
   },
   {
     "id": "movebank",
@@ -90,7 +92,9 @@
     ],
     "usos": [
       "Consulta la fuente"
-    ]
+    ],
+    "foto": "/img/movebank.svg",
+    "credito": "Ilustración original del proyecto (provisional)"
   },
   {
     "id": "gbif-mx",
@@ -133,7 +137,9 @@
     ],
     "usos": [
       "Consulta la fuente"
-    ]
+    ],
+    "foto": "/img/gbif-mx.svg",
+    "credito": "Ilustración original del proyecto (provisional)"
   },
   {
     "id": "xeno-canto",
@@ -170,7 +176,9 @@
     ],
     "usos": [
       "Consulta la fuente"
-    ]
+    ],
+    "foto": "/img/xeno-canto.svg",
+    "credito": "Ilustración original del proyecto (provisional)"
   },
   {
     "id": "wildlife-insights",
@@ -208,7 +216,9 @@
     ],
     "usos": [
       "Consulta la fuente"
-    ]
+    ],
+    "foto": "/img/wildlife-insights.svg",
+    "credito": "Ilustración original del proyecto (provisional)"
   },
   {
     "id": "globi",
@@ -251,7 +261,9 @@
     ],
     "usos": [
       "Consulta la fuente"
-    ]
+    ],
+    "foto": "/img/globi.svg",
+    "credito": "Ilustración original del proyecto (provisional)"
   },
   {
     "id": "lila-bc",
@@ -290,7 +302,9 @@
     ],
     "usos": [
       "Consulta la fuente"
-    ]
+    ],
+    "foto": "/img/lila-bc.svg",
+    "credito": "Ilustración original del proyecto (provisional)"
   },
   {
     "id": "naturalista-mx",
@@ -333,6 +347,8 @@
     ],
     "usos": [
       "Consulta la fuente"
-    ]
+    ],
+    "foto": "/img/naturalista-mx.svg",
+    "credito": "Ilustración original del proyecto (provisional)"
   }
 ]

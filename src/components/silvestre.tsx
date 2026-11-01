@@ -70,7 +70,7 @@ export function Foto({ base, cuadrado = true }: { base: Base; cuadrado?: boolean
   if (base.foto)
     return (
       <figure>
-        <img src={base.foto} alt={base.fotoSugerida} loading="lazy" className={`w-full rounded-lg object-cover ${cuadrado ? "aspect-square" : "aspect-video"}`} />
+        <img src={base.foto} alt={base.fotoSugerida} width={400} height={400} loading="lazy" decoding="async" className={`w-full rounded-lg object-cover ${cuadrado ? "aspect-square" : "aspect-video"}`} />
         {base.credito && <figcaption className="mt-1 font-mono text-xs text-atenuado">{base.credito}</figcaption>}
       </figure>
     );
