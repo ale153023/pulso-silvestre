@@ -1,0 +1,96 @@
+import { useQuery } from "@tanstack/react-query";
+import { z } from "zod";
+
+export const grupoSchema = z.object({
+  id: z.string(),
+  nombre: z.string(),
+  orden: z.number(),
+  color: z.enum(["cafe", "lima", "naranja", "oliva"]),
+});
+
+export const coberturaSchema = z.enum(["mundial", "norteamerica", "mexico"]);
+
+export const baseSchema = z.object({
+  id: z.string(),
+  nombre: z.string(),
+  fuente: z.string(),
+  tipo: z.string(),
+  grupos: z.array(z.string()),
+  cobertura: coberturaSchema,
+  descripcion: z.string(),
+  acceso: z.array(z.enum(["api", "descarga"])),
+  accesoTexto: z.string(),
+  licencia: z.string(),
+  metrica: z.enum(["vistas+descargas", "descargas", "sin_metrica_publica"]),
+  actualizadoEn: z.string(),
+  url: z.string(),
+  fotoSugerida: z.string(),
+  foto: z.string().optional(),
+  credito: z.string().optional(),
+  campos: z.array(z.object({ nombre: z.string(), descripcion: z.string() })),
+  usos: z.array(z.string()),
+});
+
+export const itemSchema = z.object({
+  baseId: z.string(),
+  posicion: z.number().nullable().optional(),
+  consultas: z.number().nullable(),
+  indice: z.number().nullable(),
+  variacionPct: z.number().nullable(),
+  estado: z.enum(["ok", "nuevo", "sin_dato", "anomalia"]),
+});
+
+export const rankingSchema = z.object({
+  semana: z.object({ id: z.string(), inicio: z.string(), fin: z.string(), etiqueta: z.string() }),
+  metodoVersion: z.number(),
+  cerrada: z.boolean(),
+  datosIlustrativos: z.boolean(),
+  generadoEn: z.string(),
+  items: z.array(itemSchema),
+});
+
+const indexSchema = z.object({ ultima: z.string(), semanas: z.array(z.string()) });
+const historialSchema = z.record(
+  z.array(z.object({ semana: z.string(), inicio: z.string(), consultas: z.number() })),
+);
+
+export type Grupo = z.infer<typeof grupoSchema>;
+export type Base = z.infer<typeof baseSchema>;
+export type Item = z.infer<typeof itemSchema>;
+export type Ranking = z.infer<typeof rankingSchema>;
+export type Cobertura = z.infer<typeof coberturaSchema>;
+export type Historial = z.infer<typeof historialSchema>;
+
+async function getJson<T>(path: string, schema: z.ZodType<T>): Promise<T> {
+  const res = await fetch(`${import.meta.env.BASE_URL}data/${path}`, { cache: "no-cache" });
+  if (!res.ok) throw new Error(`No se pudo cargar ${path} (${res.status})`);
+  const parsed = schema.safeParse(await res.json());
+  if (!parsed.success) throw new Error(`Formato inválido en ${path}`);
+  return parsed.data;
+}
+
+export interface Datos {
+  grupos: Grupo[];
+  bases: Base[];
+  ranking: Ranking;
+  historial: Historial;
+}
+
+export async function cargarDatos(): Promise<Datos> {
+  const [grupos, bases, index, historial] = await Promise.all([
+    getJson("grupos.json", z.array(grupoSchema)),
+    getJson("bases.json", z.array(baseSchema)),
+    getJson("ranking/index.json", indexSchema),
+    getJson("historial.json", historialSchema),
+  ]);
+  const ranking = await getJson(`ranking/${index.ultima}.json`, rankingSchema);
+  return { grupos: [...grupos].sort((a, b) => a.orden - b.orden), bases, ranking, historial };
+}
+
+export function useDatos() {
+  return useQuery({ queryKey: ["datos"], queryFn: cargarDatos, staleTime: Infinity, retry: 1 });
+}
+
+export function itemDe(ranking: Ranking, baseId: string): Item | undefined {
+  return ranking.items.find((i) => i.baseId === baseId);
+}
