@@ -16,3 +16,4 @@
 - 2026-11-01 — Semana 2026-W43 regenerada a petición de la autora (primera ejecución de prueba; se borró y se volvió a generar para incluir eBird).
 - 2026-11-01 — v2.7: se agregan al directorio NABat, Bumble Bee Watch y Native Bee Inventory (Norteamérica) y dos recortes de iNaturalist (murciélagos y abejas) para el pulso semanal; ilustraciones nuevas y pruebas del adaptador.
 - 2026-11-01 — Semana 2026-W43 regenerada para incluir los recortes de iNaturalist (murciélagos y abejas).
+- 2026-11-01 — v3.0: método v3, índice relativo a la mediana de las 4 semanas previas de cada fuente (100 = nivel habitual); reconstrucción de semanas previas para fuentes consultables a posteriori; barra del carrusel con marca de nivel habitual; textos actualizados.

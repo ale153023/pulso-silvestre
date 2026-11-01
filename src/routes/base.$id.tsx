@@ -77,8 +77,9 @@ function Contenido({ d }: { d: Datos }) {
         <div className="space-y-6">
           <div className="grid gap-3 sm:grid-cols-3">
             <Dato t="Semana cerrada" v={<span className="font-mono">{d.ranking.semana.id}</span>} />
-            <Dato t="Índice de la semana" v={<span className="font-mono">{sinDato ? "Sin dato esta semana" : (it?.indice ?? "—")}</span>} />
+            <Dato t="Índice de la semana" v={<span className="font-mono">{sinDato ? "Sin dato esta semana" : (it?.indice ?? "Sin referencia aún")}</span>} />
             <Dato t="Variación semanal" v={sinDato ? <span className="font-mono text-atenuado">Sin dato esta semana</span> : <Variacion item={it} />} />
+            <p className="text-xs text-atenuado sm:col-span-3">Índice 100 = nivel habitual de esta fuente (mediana de sus 4 semanas previas). Se calcula desde la tercera semana de historial.</p>
           </div>
 
           <section className="card p-5" aria-labelledby="t-consultas">

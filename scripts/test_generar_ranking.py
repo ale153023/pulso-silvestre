@@ -11,36 +11,46 @@ BASES = [{"id": "a", "nombre": "Alfa"}, {"id": "b", "nombre": "Beta"},
 
 
 class Calculo(unittest.TestCase):
-    def test_indice_posicion_variacion(self):
-        items = g.calcular_items(BASES, {"a": 200, "b": 100, "c": 100, "d": None}, {"a": 100, "b": 200, "c": 5})
+    def test_indice_relativo_a_la_mediana(self):
+        # a: 200 vs mediana(100,100,100,400)=100 -> 200; b: 50 vs mediana(100,100,100)=100 -> 50
+        items = g.calcular_items(BASES, {"a": 200, "b": 50, "c": 80, "d": None},
+                                 {"a": [100, 100, 100, 400], "b": [100, 100, 100], "c": [100, 100]},
+                                 {"a": 100, "b": 200, "c": 5})
         por = {i["baseId"]: i for i in items}
-        self.assertEqual(por["a"]["posicion"], 1)
-        self.assertEqual(por["a"]["indice"], 100)
+        self.assertEqual((por["a"]["indice"], por["a"]["posicion"]), (200, 1))
+        self.assertEqual((por["b"]["indice"], por["b"]["posicion"]), (50, 2))
         self.assertEqual(por["a"]["variacionPct"], 100)
-        # empate entre b y c: desempata por nombre (Beta < Gamma)
-        self.assertEqual((por["b"]["posicion"], por["c"]["posicion"]), (2, 3))
-        self.assertEqual(por["b"]["indice"], 50)
-        self.assertEqual(por["b"]["variacionPct"], -50)
-        # previas < 10: sin variación
-        self.assertIsNone(por["c"]["variacionPct"])
-        self.assertEqual(por["c"]["estado"], "ok")
-        # sin dato
+        self.assertEqual(por["b"]["variacionPct"], -75)
+        # c: solo 2 semanas de referencia (< 3): sin índice ni posición, pero con dato
+        self.assertIsNone(por["c"]["indice"])
+        self.assertIsNone(por["c"]["posicion"])
+        self.assertEqual(por["c"]["consultas"], 80)
+        self.assertIsNone(por["c"]["variacionPct"])  # previa < 10
         self.assertEqual(por["d"]["estado"], "sin_dato")
-        self.assertIsNone(por["d"]["posicion"])
 
-    def test_nuevo_y_anomalia(self):
-        items = g.calcular_items(BASES, {"a": 600, "b": 10, "c": None, "d": None}, {"a": 100})
+    def test_unidades_distintas_no_distorsionan(self):
+        # una fuente de millones y otra de cientos, ambas en su nivel habitual -> ambas 100
+        items = g.calcular_items(BASES, {"a": 3_000_000, "b": 250},
+                                 {"a": [3_000_000] * 4, "b": [250] * 4}, {"a": 3_000_000, "b": 250})
+        self.assertEqual({i["baseId"]: i["indice"] for i in items if i["indice"] is not None}, {"a": 100, "b": 100})
+
+    def test_mediana_cero_no_da_indice(self):
+        items = g.calcular_items(BASES, {"a": 10}, {"a": [0, 0, 0]}, {"a": 0})
+        self.assertIsNone(items[0]["indice"])
+
+    def test_empate_desempata_por_nombre_y_anomalia(self):
+        items = g.calcular_items(BASES, {"a": 100, "b": 100, "c": 600},
+                                 {"a": [100] * 3, "b": [100] * 3, "c": [100] * 3}, {"c": 100})
         por = {i["baseId"]: i for i in items}
-        self.assertEqual(por["a"]["estado"], "anomalia")
-        self.assertEqual(por["b"]["estado"], "nuevo")
-        self.assertIsNone(por["b"]["variacionPct"])
+        self.assertEqual(por["c"]["estado"], "anomalia")
+        self.assertEqual(por["c"]["posicion"], 1)
+        self.assertEqual((por["a"]["posicion"], por["b"]["posicion"]), (2, 3))
+        self.assertEqual(por["a"]["estado"], "nuevo")
 
     def test_semanas(self):
-        # sábado 31 oct 2026 -> última semana cerrada: 19-25 oct (W43)
         lunes = g.ultima_semana_cerrada(dt.date(2026, 10, 31))
         self.assertEqual(g.semana_id(lunes), "2026-W43")
         self.assertEqual(lunes, dt.date(2026, 10, 19))
-        # lunes 2 nov: la semana W44 (26 oct-1 nov) acaba de cerrar
         self.assertEqual(g.semana_id(g.ultima_semana_cerrada(dt.date(2026, 11, 2))), "2026-W44")
         self.assertEqual(g.etiqueta(dt.date(2026, 10, 19), dt.date(2026, 10, 25)), "Semana del 19 al 25 de octubre de 2026")
         self.assertEqual(g.etiqueta(dt.date(2026, 10, 26), dt.date(2026, 11, 1)), "Semana del 26 de octubre al 1 de noviembre de 2026")
@@ -55,29 +65,43 @@ class Flujo(unittest.TestCase):
         (self.d / "ranking" / "2026-W43.json").write_text(json.dumps({"datosIlustrativos": True, "items": []}))
         (self.d / "ranking" / "index.json").write_text(json.dumps({"ultima": "2026-W43", "semanas": ["2026-W43"]}))
         (self.d / "historial.json").write_text(json.dumps({"a": [{"semana": "2026-W43", "inicio": "2026-10-19", "consultas": 1000}]}))
+        g.RETROSPECTIVOS = {"a"}  # "a" se reconstruye; "b" solo se acumula
 
     def tearDown(self):
         self.tmp.cleanup()
 
-    def test_reemplaza_ilustrativo_y_no_toca_cerradas(self):
-        ad = {"a": lambda i, f: 300, "b": lambda i, f: 150}
-        lunes = dt.date(2026, 10, 19)
-        r = g.generar(self.d, lunes, ad)
-        self.assertFalse(r["datosIlustrativos"])
-        hist = json.loads((self.d / "historial.json").read_text())
-        self.assertEqual(hist["a"], [{"semana": "2026-W43", "inicio": "2026-10-19", "consultas": 300}])  # ilustrativo descartado
-        with self.assertRaises(SystemExit):  # ya cerrada y real: no se modifica
-            g.generar(self.d, lunes, ad)
+    def test_reemplaza_ilustrativo_reconstruye_y_no_toca_cerradas(self):
+        llamadas = []
 
-    def test_semana_siguiente_acumula_y_calcula_variacion(self):
-        g.generar(self.d, dt.date(2026, 10, 19), {"a": lambda i, f: 300, "b": lambda i, f: 150})
-        r = g.generar(self.d, dt.date(2026, 10, 26), {"a": lambda i, f: 330, "b": lambda i, f: 120})
+        def a(i, f):
+            llamadas.append(i)
+            return 100  # nivel habitual constante
+        lunes = dt.date(2026, 10, 19)
+        r = g.generar(self.d, lunes, {"a": lambda i, f: 150 if i == lunes else a(i, f), "b": lambda i, f: 40})
         por = {i["baseId"]: i for i in r["items"]}
-        self.assertEqual(por["a"]["variacionPct"], 10)
-        self.assertEqual(por["b"]["variacionPct"], -20)
+        # a: 4 semanas previas reconstruidas (mediana 100) -> índice 150
+        self.assertEqual((por["a"]["indice"], por["a"]["posicion"]), (150, 1))
+        self.assertEqual(len(llamadas), 4)
+        # b: no retrospectiva y sin historial -> dato sin índice
+        self.assertIsNone(por["b"]["indice"])
+        hist = json.loads((self.d / "historial.json").read_text())
+        self.assertEqual(len(hist["a"]), 5)  # 4 reconstruidas + la actual; la ilustrativa se descartó
+        self.assertEqual(hist["a"][-1]["consultas"], 150)
+        self.assertEqual(hist["b"], [{"semana": "2026-W43", "inicio": "2026-10-19", "consultas": 40}])
+        with self.assertRaises(SystemExit):  # ya cerrada y real: no se modifica
+            g.generar(self.d, lunes, {"a": lambda i, f: 1})
+
+    def test_fuente_acumulada_obtiene_indice_tras_tres_semanas(self):
+        ad = {"b": lambda i, f: 40}
+        for lunes in (dt.date(2026, 10, 19), dt.date(2026, 10, 26), dt.date(2026, 11, 2)):
+            r = g.generar(self.d, lunes, ad)
+            self.assertIsNone({i["baseId"]: i for i in r["items"]}["b"]["indice"])
+        r = g.generar(self.d, dt.date(2026, 11, 9), {"b": lambda i, f: 60})
+        b = {i["baseId"]: i for i in r["items"]}["b"]
+        self.assertEqual(b["indice"], 150)  # 60 vs mediana(40,40,40)
+        self.assertEqual(b["variacionPct"], 50)
         idx = json.loads((self.d / "ranking" / "index.json").read_text())
-        self.assertEqual(idx, {"ultima": "2026-W44", "semanas": ["2026-W43", "2026-W44"]})
-        self.assertEqual(len(json.loads((self.d / "historial.json").read_text())["a"]), 2)
+        self.assertEqual(idx["ultima"], "2026-W46")
 
     def test_fuente_caida_es_sin_dato_y_todas_caidas_no_publica(self):
         def falla(i, f):

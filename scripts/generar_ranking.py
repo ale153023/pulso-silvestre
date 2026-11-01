@@ -7,7 +7,8 @@ estado) viven AQUÍ y solo aquí: el navegador únicamente lee y muestra.
 
 Métrica: "actividad semanal" = registros nuevos que cada fuente publica en la semana
 ISO cerrada (lunes a domingo). La unidad depende de la fuente (listas, observaciones,
-ocurrencias); se declara en la página de método.
+ocurrencias), por eso NO se comparan entre sí: el índice (método v3) compara cada fuente
+contra su propio nivel habitual, la mediana de sus 4 semanas previas (100 = habitual).
 
 Uso:
   python scripts/generar_ranking.py              # cierra la última semana ISO completa
@@ -20,18 +21,24 @@ import argparse
 import datetime as dt
 import json
 import os
+import statistics
 import sys
 import urllib.parse
 import urllib.request
 from pathlib import Path
 from typing import Callable, Optional
 
-METODO_VERSION = 2
+METODO_VERSION = 3
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
          "septiembre", "octubre", "noviembre", "diciembre"]
 UMBRAL_PREVIAS = 10      # variación solo si la semana previa tuvo al menos estas unidades
 UMBRAL_ANOMALIA = 5      # consultas/previas mayor a esto se marca como anomalía
 SEMANAS_HISTORIAL = 8
+SEMANAS_BASE = 4         # semanas previas cuya mediana es el "nivel habitual" de una fuente
+MIN_SEMANAS_BASE = 3     # sin al menos estas semanas previas no hay índice (queda sin posición)
+# Fuentes cuyo conteo por fecha de creación se puede pedir a posteriori sin sesgo: se reconstruyen
+# las semanas previas que falten. GBIF no (lo "interpretado" cambia al reprocesar): se acumula.
+RETROSPECTIVOS = {"naturalista-mx", "inat-murcielagos", "inat-abejas", "ebird"}
 UA = {"User-Agent": "PulsoSilvestre/2 (proyecto academico; https://github.com/ale153023/pulso-silvestre)"}
 
 
@@ -138,17 +145,19 @@ ADAPTADORES: dict[str, Callable[[dt.date, dt.date], int]] = {
 
 # ---------------------------------------------------------------- cálculo (determinista)
 def calcular_items(bases: list[dict], actual: dict[str, Optional[int]],
-                   previas: dict[str, int]) -> list[dict]:
-    """posición por consultas desc y luego nombre; índice = round(100·c/líder);
-    variación = round((c−p)/p·100) solo si p ≥ UMBRAL_PREVIAS."""
+                   referencia: dict[str, list[int]], previa: dict[str, int]) -> list[dict]:
+    """Índice relativo: indice = round(100·c / mediana(referencia)) con al menos MIN_SEMANAS_BASE
+    semanas previas y mediana > 0; posición por índice desc y luego nombre (solo con índice).
+    Variación = round((c − previa)/previa·100) solo si previa ≥ UMBRAL_PREVIAS."""
     nombre = {b["id"]: b["nombre"] for b in bases}
-    con_dato = [(i, c) for i, c in actual.items() if c is not None]
-    con_dato.sort(key=lambda x: (-x[1], nombre.get(x[0], x[0])))
-    lider = con_dato[0][1] if con_dato else 0
-    items: list[dict] = []
-    for pos, (base_id, c) in enumerate(con_dato, start=1):
-        p = previas.get(base_id)
-        indice = round(100 * c / lider) if lider > 0 else 0
+    items: dict[str, dict] = {}
+    for base_id, c in actual.items():
+        if c is None:
+            continue
+        ref = referencia.get(base_id, [])
+        med = statistics.median(ref) if len(ref) >= MIN_SEMANAS_BASE else 0
+        indice = round(100 * c / med) if med > 0 else None
+        p = previa.get(base_id)
         if p is None:
             variacion, estado = None, "nuevo"
         elif p >= UMBRAL_PREVIAS:
@@ -156,13 +165,19 @@ def calcular_items(bases: list[dict], actual: dict[str, Optional[int]],
             estado = "anomalia" if c / p > UMBRAL_ANOMALIA else "ok"
         else:
             variacion, estado = None, "ok"
-        items.append({"baseId": base_id, "posicion": pos, "consultas": c, "indice": indice,
-                      "variacionPct": variacion, "estado": estado})
+        items[base_id] = {"baseId": base_id, "posicion": None, "consultas": c, "indice": indice,
+                          "variacionPct": variacion, "estado": estado}
+    con_indice = sorted((i for i in items.values() if i["indice"] is not None),
+                        key=lambda i: (-i["indice"], nombre.get(i["baseId"], i["baseId"])))
+    for pos, it in enumerate(con_indice, start=1):
+        it["posicion"] = pos
+    salida = con_indice + sorted((i for i in items.values() if i["indice"] is None),
+                                 key=lambda i: nombre.get(i["baseId"], i["baseId"]))
     for b in bases:
         if actual.get(b["id"]) is None:
-            items.append({"baseId": b["id"], "posicion": None, "consultas": None, "indice": None,
-                          "variacionPct": None, "estado": "sin_dato"})
-    return items
+            salida.append({"baseId": b["id"], "posicion": None, "consultas": None, "indice": None,
+                           "variacionPct": None, "estado": "sin_dato"})
+    return salida
 
 
 def _leer(ruta: Path, defecto):
@@ -196,15 +211,41 @@ def generar(datos: Path, lunes: dt.date, adaptadores=None, ahora: Optional[dt.da
         except Exception as e:  # una fuente caída no detiene a las demás
             print(f"AVISO {b['id']}: {e}", file=sys.stderr)
             actual[b["id"]] = None
-
     if all(v is None for v in actual.values()):
         raise SystemExit("Ninguna fuente respondió; no se publica una semana vacía.")
 
-    # Semana previa: solo si existe, es real y es la inmediata anterior.
-    previas: dict[str, int] = {}
-    prev = _leer(datos / "ranking" / f"{semana_id(inicio - dt.timedelta(days=7))}.json", None)
-    if prev and not prev.get("datosIlustrativos"):
-        previas = {i["baseId"]: i["consultas"] for i in prev["items"] if i.get("consultas") is not None}
+    # Historial acumulado (una ilustrativa previa se descarta).
+    hist = {} if (existente and existente.get("datosIlustrativos")) else _leer(datos / "historial.json", {})
+    por_semana = {b: {s["semana"]: s for s in serie} for b, serie in hist.items()}
+
+    # Semanas previas que faltan: se reconstruyen solo para fuentes retrospectivas.
+    for base_id, c in actual.items():
+        f = adaptadores.get(base_id)
+        if c is None or f is None or base_id not in RETROSPECTIVOS:
+            continue
+        for k in range(1, SEMANAS_BASE + 1):
+            ini_k = inicio - dt.timedelta(days=7 * k)
+            sid_k = semana_id(ini_k)
+            if sid_k in por_semana.get(base_id, {}):
+                continue
+            try:
+                v = f(ini_k, ini_k + dt.timedelta(days=6))
+            except Exception as e:
+                print(f"AVISO {base_id} {sid_k}: {e}", file=sys.stderr)
+                continue
+            por_semana.setdefault(base_id, {})[sid_k] = {"semana": sid_k, "inicio": ini_k.isoformat(), "consultas": v}
+
+    referencia: dict[str, list[int]] = {}
+    previa: dict[str, int] = {}
+    for base_id in actual:
+        vals = []
+        for k in range(1, SEMANAS_BASE + 1):
+            e = por_semana.get(base_id, {}).get(semana_id(inicio - dt.timedelta(days=7 * k)))
+            if e is not None:
+                vals.append(e["consultas"])
+                if k == 1:
+                    previa[base_id] = e["consultas"]
+        referencia[base_id] = vals
 
     ranking = {
         "semana": {"id": sid, "inicio": inicio.isoformat(), "fin": fin.isoformat(),
@@ -213,24 +254,19 @@ def generar(datos: Path, lunes: dt.date, adaptadores=None, ahora: Optional[dt.da
         "cerrada": True,
         "datosIlustrativos": False,
         "generadoEn": ahora.strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "items": calcular_items(bases, actual, previas),
+        "items": calcular_items(bases, actual, referencia, previa),
     }
     _escribir(ruta, ranking)
 
-    # Índice de semanas
     indice = _leer(datos / "ranking" / "index.json", {"ultima": sid, "semanas": []})
     semanas = sorted(set(indice["semanas"]) | {sid})
     _escribir(datos / "ranking" / "index.json", {"ultima": semanas[-1], "semanas": semanas})
 
-    # Historial: si venía de datos ilustrativos, se descarta; si no, se acumula.
-    hist = {} if (existente and existente.get("datosIlustrativos")) else _leer(datos / "historial.json", {})
-    for it in ranking["items"]:
-        if it["consultas"] is None:
-            continue
-        serie = [s for s in hist.get(it["baseId"], []) if s["semana"] != sid]
-        serie.append({"semana": sid, "inicio": inicio.isoformat(), "consultas": it["consultas"]})
-        hist[it["baseId"]] = sorted(serie, key=lambda s: s["semana"])[-SEMANAS_HISTORIAL:]
-    _escribir(datos / "historial.json", hist)
+    for base_id, c in actual.items():
+        if c is not None:
+            por_semana.setdefault(base_id, {})[sid] = {"semana": sid, "inicio": inicio.isoformat(), "consultas": c}
+    salida = {b: sorted(d.values(), key=lambda s: s["semana"])[-SEMANAS_HISTORIAL:] for b, d in por_semana.items() if d}
+    _escribir(datos / "historial.json", salida)
     return ranking
 
 

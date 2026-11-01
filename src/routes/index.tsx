@@ -130,8 +130,8 @@ function Carrusel({ d }: { d: Datos }) {
     .sort((a, b) => (a.posicion ?? 0) - (b.posicion ?? 0));
   return (
     <section className="mx-auto mt-12 max-w-6xl px-4" aria-labelledby="t-carrusel">
-      <h2 id="t-carrusel" className="text-2xl text-tinta">Más actividad esta semana</h2>
-      <p className="mt-1 text-sm text-atenuado">Desliza para ver más → · Índice 100 = la más activa de la semana</p>
+      <h2 id="t-carrusel" className="text-2xl text-tinta">Más activas frente a lo habitual</h2>
+      <p className="mt-1 text-sm text-atenuado">Desliza para ver más → · Índice 100 = su nivel habitual (mediana de sus 4 semanas previas); la marca de la barra indica ese nivel</p>
       <div role="region" aria-label="Carrusel de actividad semanal" tabIndex={0} className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4">
         {items.map((it) => {
           const b = d.bases.find((x) => x.id === it.baseId);
@@ -146,8 +146,9 @@ function Carrusel({ d }: { d: Datos }) {
                 <span className="font-mono text-sm text-tinta">Índice {it.indice ?? "—"}</span>
                 <Variacion item={it} />
               </div>
-              <div className="bg-pista mt-2 h-2 rounded-full" aria-hidden="true">
-                <div className="bg-rojo h-2 rounded-full" style={{ width: `${it.indice ?? 0}%` }} />
+              <div className="bg-pista relative mt-2 h-2 rounded-full" aria-hidden="true">
+                <div className="bg-rojo h-2 rounded-full" style={{ width: `${Math.min(100, (it.indice ?? 0) / 2)}%` }} />
+                <div className="absolute -top-0.5 left-1/2 h-3 w-0.5 bg-tinta/50" />
               </div>
             </Link>
           );
@@ -160,8 +161,8 @@ function Carrusel({ d }: { d: Datos }) {
 function Metodo() {
   const pasos = [
     "Consultamos las APIs abiertas de cada fuente y contamos los registros nuevos que publicó durante la semana ISO (lunes a domingo).",
-    "Cada fuente usa su propia unidad (observaciones, listas de verificación u ocurrencias); las que no publican una métrica abierta aparecen como «Sin dato esta semana».",
-    "Calculamos el índice: 100 es la base con más actividad y las demás se expresan en proporción.",
+    "Cada fuente tiene su propia unidad (observaciones, listas de verificación u ocurrencias), así que no se comparan entre sí: cada una se mide contra su propio nivel habitual, la mediana de sus 4 semanas previas. Las que no publican una métrica abierta aparecen como «Sin dato esta semana».",
+    "Calculamos el índice: 100 es el nivel habitual de la fuente y 150 significa 50 % más actividad de lo habitual. Se necesitan al menos 3 semanas previas.",
   ];
   return (
     <section id="metodo" className="mx-auto mt-16 max-w-5xl scroll-mt-6 px-4" aria-labelledby="t-metodo">
@@ -177,10 +178,10 @@ function Metodo() {
       <div className="bg-tinte mt-4 rounded-xl border p-5">
         <h3 className="font-semibold text-tinta">¿Por qué el índice es fijo?</h3>
         <p className="mt-2 text-sm text-texto2">
-          Se calcula una sola vez, al cerrar la semana, con la fórmula 100 × actividad ÷ actividad de la base líder, y se guarda. No se recalcula en tu navegador ni al aplicar filtros, así que una cita o una captura de pantalla sigue siendo reproducible. Si cambia la fórmula, se publica una nueva versión del método sin tocar las semanas anteriores.
+          Se calcula una sola vez, al cerrar la semana, con la fórmula 100 × actividad ÷ mediana de las 4 semanas previas de esa misma fuente, y se guarda. No se recalcula en tu navegador ni al aplicar filtros, así que una cita o una captura de pantalla sigue siendo reproducible. Si cambia la fórmula, se publica una nueva versión del método sin tocar las semanas anteriores.
         </p>
       </div>
-      <p className="mt-3 text-sm text-atenuado">Solo datos abiertos. Cada ficha indica la licencia y cómo citar la fuente. El índice sirve para ordenar dentro de la semana: las unidades difieren entre fuentes y no mide importancia ni número de consultas.</p>
+      <p className="mt-3 text-sm text-atenuado">Solo datos abiertos. Cada ficha indica la licencia y cómo citar la fuente. El índice compara cada fuente contra su propio nivel habitual, no contra las demás: no mide importancia ni número de consultas.</p>
     </section>
   );
 }

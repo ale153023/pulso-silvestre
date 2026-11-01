@@ -18,6 +18,7 @@ Este documento registra cómo se llegó al proyecto actual, desde la idea hasta 
 | 10 | Datos reales | Cambio de «consultas» a «actividad semanal» y flujo automático semanal |
 | 11 | Alcance, paleta e interactividad | Nuevo título y enfoque, paleta azul y crema, señales regionales interactivas |
 | 12 | Murciélagos y abejas de Norteamérica | Tres bases estadounidenses abiertas y dos recortes de iNaturalist para el pulso |
+| 13 | Índice relativo | Cada fuente se compara contra su propio nivel habitual (método v3) |
 
 ## 1. Idea y viabilidad
 La primera consulta fue si era viable una página que permitiera ver las bases de datos más buscadas cada semana en ciertos sitios, con interés particular en comportamiento animal, y si había una forma más amable de plantearlo. Se concluyó que era viable como **directorio con señales semanales**, no como un buscador propio.
@@ -94,6 +95,9 @@ La autora propuso sumar bases elaboradas en Estados Unidos sobre murciélagos y 
 - **Native Bee Inventory and Monitoring Lab** (USGS): registros de abejas y otros insectos, accesibles desde GBIF; la licencia no se indica en su página.
 
 Hallazgo: las tres se actualizan por entregas, no semana a semana, así que no sirven para un pulso semanal. Decisión (entre tres alternativas): agregarlas al directorio con fichas reales (región Norteamérica, métrica «Pendiente de conectar») y medir el pulso de los dos grupos con **recortes de iNaturalist** (murciélagos y abejas en Estados Unidos, Canadá y México). Los recortes no son bases nuevas; se declaran como tales y comparten los límites de NaturaLista (solape, esfuerzo de observación). Las nuevas bases entran al pulso desde la siguiente semana cerrada.
+
+## 13. Índice relativo (método v3)
+Con datos reales, la primera semana mostró el problema de las unidades: GBIF (≈3 millones) dejaba a las demás fuentes con índice 1 o 0. Entre dos salidas (cambiar la medida de GBIF o pasar a un índice relativo) la autora eligió el **índice relativo**: cada fuente se compara contra la mediana de sus 4 semanas previas (100 = su nivel habitual). Consecuencias documentadas: se necesitan 3 semanas de historial; las fuentes consultables a posteriori (NaturaLista, recortes de iNaturalist, eBird) reconstruyen sus semanas previas, mientras GBIF las acumula; el índice puede pasar de 100 y la barra de la tarjeta marca el nivel habitual en el centro; la semana W43 de prueba se regenera con el método nuevo.
 
 ## Cómo se trabajó con IA
 - **Claude** (conversación y Claude Code): análisis de viabilidad, maqueta, metaprompt, auditoría de código, redacción de documentación, script de datos y cambios al repositorio.
