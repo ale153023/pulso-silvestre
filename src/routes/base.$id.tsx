@@ -78,7 +78,11 @@ function Contenido({ d }: { d: Datos }) {
             {serie.length === 0 ? (
               <p className="mt-3 text-sm text-atenuado">Sin historial disponible.</p>
             ) : (
-              <div className="mt-4 flex h-48 items-end gap-2" role="img" aria-label={`Consultas de las últimas ${serie.length} semanas`}>
+              <>
+              <ul className="sr-only">
+                {serie.map((s) => <li key={s.semana}>Semana del {fmtCorta(s.inicio)}: {fmtNum(s.consultas)} consultas</li>)}
+              </ul>
+              <div className="mt-4 flex h-48 items-end gap-2" aria-hidden="true">
                 {serie.map((s, i) => (
                   <div key={s.semana} className="flex h-full flex-1 flex-col items-center justify-end gap-1">
                     <span className="font-mono text-[10px] text-texto2">{fmtNum(s.consultas)}</span>
@@ -87,6 +91,7 @@ function Contenido({ d }: { d: Datos }) {
                   </div>
                 ))}
               </div>
+              </>
             )}
           </section>
 
