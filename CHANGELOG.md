@@ -6,3 +6,4 @@
 - 2026-11-01 — v1.3: «Cómo citar» se llena con la fuente, año, título y enlace de cada base.
 - 2026-11-01 — v1.4: los datos se cargan en el servidor (SSR) y cada ficha tiene su propio título de pestaña.
 - 2026-11-01 — v1.5: se quitan las leyendas «(ejemplo)» de las tarjetas de Señales regionales.
+- 2026-11-01 — v2.0: método v2: el ranking usa actividad semanal (registros nuevos) con datos reales de GBIF, NaturaLista y eBird; script generar_ranking.py y flujo semanal en GitHub Actions; textos «consultas» pasan a «actividad».

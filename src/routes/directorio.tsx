@@ -113,7 +113,7 @@ function Contenido({ d }: { d: Datos }) {
             <p aria-live="polite" className="font-mono text-sm text-texto2">{res.length} {res.length === 1 ? "base de datos" : "bases de datos"}</p>
             <label className="grid gap-1 text-sm font-medium text-texto2">Ordenar por
               <select className={campo} value={f.orden} onChange={(e) => set({ orden: e.target.value })}>
-                <option value="consultas">Más consultadas esta semana</option>
+                <option value="consultas">Más activas esta semana</option>
                 <option value="az">Nombre (A–Z)</option>
                 <option value="reciente">Actualización reciente</option>
               </select>

@@ -11,6 +11,8 @@ export const ACCESO: Record<string, string> = { api: "API abierta", descarga: "D
 export const METRICA: Record<string, string> = {
   "vistas+descargas": "Vistas + descargas",
   descargas: "Descargas",
+  registros_nuevos: "Registros nuevos por semana",
+  pendiente: "Pendiente de conectar",
   sin_metrica_publica: "Sin métrica pública",
 };
 export const COBERTURA: Record<string, string> = { mexico: "México", norteamerica: "Norteamérica", mundial: "Mundial" };

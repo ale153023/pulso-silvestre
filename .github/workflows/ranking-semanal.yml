@@ -1,0 +1,55 @@
+name: Ranking semanal
+
+on:
+  schedule:
+    - cron: "17 12 * * 1"   # lunes 12:17 UTC (06:17 en la Ciudad de México): cierra la semana ISO anterior
+  workflow_dispatch:
+    inputs:
+      semana:
+        description: "Semana ISO a cerrar (p. ej. 2026-W43). Vacío = la última semana completa."
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ranking-semanal
+  cancel-in-progress: false
+
+jobs:
+  generar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Probar las reglas de cálculo
+        run: python -m unittest discover -s scripts -v
+
+      - name: Generar el ranking de la semana cerrada
+        env:
+          EBIRD_API_KEY: ${{ secrets.EBIRD_API_KEY }}
+          SEMANA: ${{ inputs.semana }}
+        run: |
+          if [ -n "$SEMANA" ]; then
+            python scripts/generar_ranking.py --semana "$SEMANA"
+          else
+            python scripts/generar_ranking.py
+          fi
+
+      - name: Publicar los JSON
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data
+          if git diff --cached --quiet; then
+            echo "Sin cambios."
+          else
+            git commit -m "Ranking semanal automático"
+            git push
+          fi

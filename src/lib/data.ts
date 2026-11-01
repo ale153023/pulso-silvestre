@@ -21,7 +21,7 @@ export const baseSchema = z.object({
   acceso: z.array(z.enum(["api", "descarga"])),
   accesoTexto: z.string(),
   licencia: z.string(),
-  metrica: z.enum(["vistas+descargas", "descargas", "sin_metrica_publica"]),
+  metrica: z.enum(["vistas+descargas", "descargas", "registros_nuevos", "sin_metrica_publica", "pendiente"]),
   actualizadoEn: z.string(),
   url: z.string(),
   fotoSugerida: z.string(),

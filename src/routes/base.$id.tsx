@@ -8,7 +8,7 @@ export const Route = createFileRoute("/base/$id")({
   head: ({ loaderData, params }) => {
     const b = loaderData?.bases.find((x) => x.id === params.id);
     const titulo = b ? `${b.nombre} · Pulso Silvestre` : "Ficha de base de datos · Pulso Silvestre";
-    const desc = b?.descripcion ?? "Consultas semanales, contenido, licencia y forma de citar una base de datos abierta de fauna.";
+    const desc = b?.descripcion ?? "Actividad semanal, contenido, licencia y forma de citar una base de datos abierta de fauna.";
     return {
       meta: [
         { title: titulo },
@@ -80,13 +80,13 @@ function Contenido({ d }: { d: Datos }) {
           </div>
 
           <section className="card p-5" aria-labelledby="t-consultas">
-            <h2 id="t-consultas" className="text-xl text-tinta">Consultas por semana</h2>
+            <h2 id="t-consultas" className="text-xl text-tinta">Actividad por semana</h2>
             {serie.length === 0 ? (
               <p className="mt-3 text-sm text-atenuado">Sin historial disponible.</p>
             ) : (
               <>
               <ul className="sr-only">
-                {serie.map((s) => <li key={s.semana}>Semana del {fmtCorta(s.inicio)}: {fmtNum(s.consultas)} consultas</li>)}
+                {serie.map((s) => <li key={s.semana}>Semana del {fmtCorta(s.inicio)}: {fmtNum(s.consultas)} registros nuevos</li>)}
               </ul>
               <div className="mt-4 flex h-48 items-end gap-2" aria-hidden="true">
                 {serie.map((s, i) => (

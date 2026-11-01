@@ -29,7 +29,7 @@ Migas de pan (Directorio / tipo / nombre), chips (tipo, grupos, acceso), H1, des
 3. CONTEXTO
 3.1 Propósito: sitio académico con fines divulgativos para personas que dan seguimiento a la vida silvestre (estudiantes, investigadores, gestores de conservación, divulgadores), principalmente en México. Abierto a cualquier grupo animal. Tono formal, claro, español de México.
 
-3.2 Glosario: Base = fuente o conjunto de datos del directorio. Consultas = vistas + descargas de la semana (diferencia entre dos fotos de un contador acumulado). Índice = 100 × consultas ÷ consultas de la base líder de esa semana (solo para ordenar y comparar dentro de una semana). Variación = % de cambio de las consultas frente a la semana previa. Semana cerrada = semana ISO (lunes a domingo) ya calculada e inmutable.
+3.2 Glosario: Base = fuente o conjunto de datos del directorio. Actividad semanal (campo JSON `consultas`, nombre conservado) = registros nuevos que la fuente publica en la semana ISO cerrada, medidos con su API abierta; la unidad depende de la fuente. Las bases sin métrica pública abierta quedan como "sin_dato". (Versión 1 del método usaba vistas + descargas; ver CHANGELOG.) Índice = 100 × consultas ÷ consultas de la base líder de esa semana (solo para ordenar y comparar dentro de una semana). Variación = % de cambio de las consultas frente a la semana previa. Semana cerrada = semana ISO (lunes a domingo) ya calculada e inmutable.
 
 3.3 Contrato de datos (public/data/; todo el contenido sale de aquí, el código no lleva datos)
 - grupos.json: [{id, nombre, orden, color}] → aves/cafe, mamíferos/lima, reptiles/naranja, anfibios/oliva, peces/lima, insectos/cafe (ids sin acentos: aves, mamiferos, reptiles, anfibios, peces, insectos).

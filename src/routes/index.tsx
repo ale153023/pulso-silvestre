@@ -9,7 +9,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Pulso Silvestre · Ranking semanal de datos de fauna" },
-      { name: "description", content: "Las bases de datos abiertas de comportamiento y seguimiento de fauna silvestre más consultadas esta semana." },
+      { name: "description", content: "Las bases de datos abiertas de comportamiento y seguimiento de fauna silvestre con más actividad esta semana." },
       { property: "og:title", content: "Pulso Silvestre · Ranking semanal" },
       { property: "og:description", content: "Ranking semanal de bases de datos abiertas de fauna silvestre, construido solo con fuentes abiertas." },
     ],
@@ -35,7 +35,7 @@ function Contenido({ d }: { d: Datos }) {
             <span className="bg-lima mb-4 inline-block rounded-full px-3 py-1 text-xs font-semibold text-tinta">Datos ilustrativos</span>
           )}
           <p className="font-mono text-xs uppercase tracking-widest text-atenuado">{ranking.semana.etiqueta} · {ranking.semana.id}</p>
-          <h1 className="mt-3 text-tinta">Bases de datos de fauna silvestre más consultadas esta semana</h1>
+          <h1 className="mt-3 text-tinta">Bases de datos de fauna silvestre con más actividad esta semana</h1>
           <p className="mx-auto mt-4 max-w-2xl text-texto2">Ranking construido solo con fuentes abiertas. Elige un grupo en el panal para explorar su directorio.</p>
         </div>
         <Panal grupos={d.grupos} />
@@ -130,8 +130,8 @@ function Carrusel({ d }: { d: Datos }) {
     .sort((a, b) => (a.posicion ?? 0) - (b.posicion ?? 0));
   return (
     <section className="mx-auto mt-12 max-w-6xl px-4" aria-labelledby="t-carrusel">
-      <h2 id="t-carrusel" className="text-2xl text-tinta">Lo más consultado esta semana</h2>
-      <p className="mt-1 text-sm text-atenuado">Desliza para ver más → · Índice 100 = la más consultada de la semana</p>
+      <h2 id="t-carrusel" className="text-2xl text-tinta">Lo más activo esta semana</h2>
+      <p className="mt-1 text-sm text-atenuado">Desliza para ver más → · Índice 100 = la más activa de la semana</p>
       <div role="region" aria-label="Carrusel del ranking semanal" tabIndex={0} className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4">
         {items.map((it) => {
           const b = d.bases.find((x) => x.id === it.baseId);
@@ -159,9 +159,9 @@ function Carrusel({ d }: { d: Datos }) {
 
 function Metodo() {
   const pasos = [
-    "Consultamos las APIs oficiales de cada fuente.",
-    "Restamos la foto de la semana anterior.",
-    "Calculamos el índice: 100 es la base más consultada y las demás se expresan en proporción.",
+    "Consultamos las APIs abiertas de cada fuente y contamos los registros nuevos que publicó durante la semana ISO (lunes a domingo).",
+    "Cada fuente usa su propia unidad (observaciones, listas de verificación u ocurrencias); las que no publican una métrica abierta aparecen como «Sin dato esta semana».",
+    "Calculamos el índice: 100 es la base con más actividad y las demás se expresan en proporción.",
   ];
   return (
     <section id="metodo" className="mx-auto mt-16 max-w-5xl scroll-mt-6 px-4" aria-labelledby="t-metodo">
@@ -177,7 +177,7 @@ function Metodo() {
       <div className="bg-tinte mt-4 rounded-xl border p-5">
         <h3 className="font-semibold text-tinta">¿Por qué el índice es fijo?</h3>
         <p className="mt-2 text-sm text-texto2">
-          Se calcula una sola vez, al cerrar la semana, con la fórmula 100 × consultas ÷ consultas de la base líder, y se guarda. No se recalcula en tu navegador ni al aplicar filtros, así que una cita o una captura de pantalla sigue siendo reproducible. Si cambia la fórmula, se publica una nueva versión del método sin tocar las semanas anteriores.
+          Se calcula una sola vez, al cerrar la semana, con la fórmula 100 × actividad ÷ actividad de la base líder, y se guarda. No se recalcula en tu navegador ni al aplicar filtros, así que una cita o una captura de pantalla sigue siendo reproducible. Si cambia la fórmula, se publica una nueva versión del método sin tocar las semanas anteriores.
         </p>
       </div>
       <p className="mt-3 text-sm text-atenuado">Solo datos abiertos. Cada ficha indica la licencia y cómo citar la fuente.</p>
