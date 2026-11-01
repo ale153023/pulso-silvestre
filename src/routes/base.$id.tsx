@@ -133,7 +133,8 @@ function Contenido({ d }: { d: Datos }) {
           </section>
           <section id="citar" className="card scroll-mt-6 p-5" aria-labelledby="t-citar">
             <h2 id="t-citar" className="text-xl text-tinta">Cómo citar</h2>
-            <p className="mt-3 rounded-lg bg-tinte p-3 font-mono text-xs text-texto2">[Institución]. [Año]. [Título]. [Versión]. [URL]. Consultado el [fecha].</p>
+            <p className="mt-3 rounded-lg bg-tinte p-3 font-mono text-xs text-texto2">{b.fuente}. {b.actualizadoEn.slice(0, 4)}. {b.nombre}. {b.url}. Consultado el [fecha de consulta].</p>
+            <p className="mt-2 text-xs text-atenuado">Sustituye [fecha de consulta] por el día en que revisaste la fuente y confirma en ella la versión y la licencia ({b.licencia}).</p>
           </section>
           {rel.length > 0 && (
             <section className="card p-5" aria-labelledby="t-rel">
