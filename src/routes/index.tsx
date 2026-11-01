@@ -180,7 +180,7 @@ function Metodo() {
           Se calcula una sola vez, al cerrar la semana, con la fórmula 100 × actividad ÷ actividad de la base líder, y se guarda. No se recalcula en tu navegador ni al aplicar filtros, así que una cita o una captura de pantalla sigue siendo reproducible. Si cambia la fórmula, se publica una nueva versión del método sin tocar las semanas anteriores.
         </p>
       </div>
-      <p className="mt-3 text-sm text-atenuado">Solo datos abiertos. Cada ficha indica la licencia y cómo citar la fuente.</p>
+      <p className="mt-3 text-sm text-atenuado">Solo datos abiertos. Cada ficha indica la licencia y cómo citar la fuente. El índice sirve para ordenar dentro de la semana: las unidades difieren entre fuentes y no mide importancia ni número de consultas.</p>
     </section>
   );
 }
