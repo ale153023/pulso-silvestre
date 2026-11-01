@@ -51,7 +51,7 @@
       "Identificar celdas con registros nuevos que sugieran cambios de distribución."
     ],
     "foto": "/img/ebird.svg",
-    "credito": "Ilustración original del proyecto (provisional)"
+    "credito": "Ilustración original del proyecto"
   },
   {
     "id": "movebank",
@@ -70,31 +70,45 @@
       "api",
       "descarga"
     ],
-    "accesoTexto": "API y descarga",
-    "licencia": "Según el estudio",
+    "accesoTexto": "API y descarga (estudios públicos)",
+    "licencia": "Licencia Creative Commons o términos propios, según el estudio",
     "metrica": "vistas+descargas",
     "actualizadoEn": "2026-10-22",
     "url": "https://www.movebank.org",
     "fotoSugerida": "animal con collar GPS",
     "campos": [
       {
-        "nombre": "Especie",
-        "descripcion": "Consulta la fuente"
-      },
-      {
-        "nombre": "Fecha",
-        "descripcion": "Consulta la fuente"
+        "nombre": "Marca de tiempo",
+        "descripcion": "Fecha y hora de cada registro; es obligatoria en todos los eventos"
       },
       {
         "nombre": "Ubicación",
-        "descripcion": "Consulta la fuente"
+        "descripcion": "Coordenadas estimadas por GPS, GNSS o Argos cuando el sensor mide posición"
+      },
+      {
+        "nombre": "Tipo de sensor",
+        "descripcion": "Sensor que generó el dato: GPS, acelerómetro, temperatura, magnetómetro, etc."
+      },
+      {
+        "nombre": "Animal",
+        "descripcion": "Identificador del individuo rastreado y su especie"
+      },
+      {
+        "nombre": "Marca o tag",
+        "descripcion": "Dispositivo colocado en el animal; un tag solo se despliega en un animal a la vez"
+      },
+      {
+        "nombre": "Despliegue",
+        "descripcion": "Periodo en que la marca estuvo sobre el animal"
       }
     ],
     "usos": [
-      "Consulta la fuente"
+      "Reconstruir rutas y áreas de actividad de individuos rastreados.",
+      "Comparar rutas migratorias entre temporadas o poblaciones.",
+      "Combinar la posición con acelerometría para estudiar el comportamiento del animal."
     ],
     "foto": "/img/movebank.svg",
-    "credito": "Ilustración original del proyecto (provisional)"
+    "credito": "Ilustración original del proyecto"
   },
   {
     "id": "gbif-mx",
@@ -116,7 +130,7 @@
       "descarga"
     ],
     "accesoTexto": "API y descarga",
-    "licencia": "Según el conjunto",
+    "licencia": "CC0, CC BY o CC BY-NC, según el registro",
     "metrica": "vistas+descargas",
     "actualizadoEn": "2026-10-20",
     "url": "https://www.gbif.org",
@@ -124,22 +138,36 @@
     "campos": [
       {
         "nombre": "Especie",
-        "descripcion": "Consulta la fuente"
+        "descripcion": "Nombre científico de la especie y su clasificación taxonómica"
       },
       {
-        "nombre": "Fecha",
-        "descripcion": "Consulta la fuente"
+        "nombre": "Fecha del evento",
+        "descripcion": "Cuándo se hizo la observación o colecta"
       },
       {
-        "nombre": "Ubicación",
-        "descripcion": "Consulta la fuente"
+        "nombre": "Coordenadas",
+        "descripcion": "Latitud y longitud decimales del registro"
+      },
+      {
+        "nombre": "Tipo de registro",
+        "descripcion": "Observación humana, espécimen de museo, registro automatizado, etc."
+      },
+      {
+        "nombre": "Conjunto de datos",
+        "descripcion": "Identificador de la colección o institución que publica el registro"
+      },
+      {
+        "nombre": "Licencia",
+        "descripcion": "Licencia aplicada a cada registro"
       }
     ],
     "usos": [
-      "Consulta la fuente"
+      "Mapear la distribución conocida de una especie en México.",
+      "Detectar vacíos de muestreo entre regiones o grupos taxonómicos.",
+      "Comparar la riqueza de especies registrada por zona y periodo."
     ],
     "foto": "/img/gbif-mx.svg",
-    "credito": "Ilustración original del proyecto (provisional)"
+    "credito": "Ilustración original del proyecto"
   },
   {
     "id": "xeno-canto",
@@ -154,7 +182,7 @@
     "acceso": [
       "api"
     ],
-    "accesoTexto": "API",
+    "accesoTexto": "API con clave gratuita",
     "licencia": "Creative Commons, según la grabación",
     "metrica": "vistas+descargas",
     "actualizadoEn": "2026-10-23",
@@ -163,22 +191,40 @@
     "campos": [
       {
         "nombre": "Especie",
-        "descripcion": "Consulta la fuente"
+        "descripcion": "Género, especie y nombre común de quien vocaliza"
       },
       {
-        "nombre": "Fecha",
-        "descripcion": "Consulta la fuente"
+        "nombre": "Tipo de sonido",
+        "descripcion": "Canto, llamado u otra vocalización"
       },
       {
-        "nombre": "Ubicación",
-        "descripcion": "Consulta la fuente"
+        "nombre": "Localidad",
+        "descripcion": "País y lugar de la grabación"
+      },
+      {
+        "nombre": "Coordenadas",
+        "descripcion": "Latitud y longitud de la grabación"
+      },
+      {
+        "nombre": "Calidad",
+        "descripcion": "Calificación de la grabación asignada por la comunidad"
+      },
+      {
+        "nombre": "Grabador",
+        "descripcion": "Persona que aportó la grabación"
+      },
+      {
+        "nombre": "Licencia",
+        "descripcion": "Licencia Creative Commons de cada grabación"
       }
     ],
     "usos": [
-      "Consulta la fuente"
+      "Identificar especies por su canto y comparar variaciones regionales.",
+      "Entrenar o validar modelos de reconocimiento acústico de aves.",
+      "Documentar la presencia de especies donde hay pocas observaciones visuales."
     ],
     "foto": "/img/xeno-canto.svg",
-    "credito": "Ilustración original del proyecto (provisional)"
+    "credito": "Ilustración original del proyecto"
   },
   {
     "id": "wildlife-insights",
@@ -195,30 +241,44 @@
       "descarga"
     ],
     "accesoTexto": "Descarga",
-    "licencia": "Según el proyecto",
+    "licencia": "CC BY o CC BY-NC, según el proyecto; sin imágenes de personas ni ubicaciones exactas de especies sensibles",
     "metrica": "vistas+descargas",
     "actualizadoEn": "2026-10-15",
     "url": "https://www.wildlifeinsights.org",
     "fotoSugerida": "fauna en cámara trampa",
     "campos": [
       {
-        "nombre": "Especie",
-        "descripcion": "Consulta la fuente"
+        "nombre": "Proyecto",
+        "descripcion": "Objetivos, método, licencia y cita recomendada del proyecto"
       },
       {
-        "nombre": "Fecha",
-        "descripcion": "Consulta la fuente"
+        "nombre": "Cámara",
+        "descripcion": "Dispositivo utilizado en el monitoreo"
       },
       {
-        "nombre": "Ubicación",
-        "descripcion": "Consulta la fuente"
+        "nombre": "Despliegue",
+        "descripcion": "Lugar, coordenadas y fechas de instalación y retiro de cada cámara"
+      },
+      {
+        "nombre": "Imagen",
+        "descripcion": "Detección por fotografía con especie, fecha y hora, y cajas de detección"
+      },
+      {
+        "nombre": "Secuencia",
+        "descripcion": "Detecciones agrupadas en ráfagas de imágenes"
+      },
+      {
+        "nombre": "Identificado por",
+        "descripcion": "Persona o visión por computadora, con su nivel de confianza"
       }
     ],
     "usos": [
-      "Consulta la fuente"
+      "Estimar qué especies están presentes y con qué frecuencia en un sitio.",
+      "Comparar actividad de fauna entre sitios o periodos de muestreo.",
+      "Evaluar el efecto de perturbaciones usando varios proyectos de cámaras trampa."
     ],
     "foto": "/img/wildlife-insights.svg",
-    "credito": "Ilustración original del proyecto (provisional)"
+    "credito": "Ilustración original del proyecto"
   },
   {
     "id": "globi",
@@ -247,23 +307,33 @@
     "fotoSugerida": "polinizador en una flor",
     "campos": [
       {
-        "nombre": "Especie",
-        "descripcion": "Consulta la fuente"
+        "nombre": "Taxón de origen",
+        "descripcion": "Especie que participa en la interacción"
       },
       {
-        "nombre": "Fecha",
-        "descripcion": "Consulta la fuente"
+        "nombre": "Tipo de interacción",
+        "descripcion": "Por ejemplo: se alimenta de, depreda a, es parásito de, interactúa con"
+      },
+      {
+        "nombre": "Taxón de destino",
+        "descripcion": "Especie con la que interactúa"
       },
       {
         "nombre": "Ubicación",
-        "descripcion": "Consulta la fuente"
+        "descripcion": "Latitud y longitud cuando están disponibles"
+      },
+      {
+        "nombre": "Cita del estudio",
+        "descripcion": "Referencia de la fuente que documentó la interacción"
       }
     ],
     "usos": [
-      "Consulta la fuente"
+      "Construir redes de interacciones, por ejemplo de depredación o parasitismo.",
+      "Consultar qué especies se documentan como presa o hospedero de otra.",
+      "Contrastar interacciones registradas entre regiones o grupos taxonómicos."
     ],
     "foto": "/img/globi.svg",
-    "credito": "Ilustración original del proyecto (provisional)"
+    "credito": "Ilustración original del proyecto"
   },
   {
     "id": "lila-bc",
@@ -281,30 +351,44 @@
       "descarga"
     ],
     "accesoTexto": "Descarga",
-    "licencia": "Según el conjunto",
+    "licencia": "Mayormente CDLA permisiva; algunos conjuntos con términos propios",
     "metrica": "vistas+descargas",
     "actualizadoEn": "2026-09-30",
     "url": "https://lila.science",
     "fotoSugerida": "mamífero en cámara trampa",
     "campos": [
       {
-        "nombre": "Especie",
-        "descripcion": "Consulta la fuente"
+        "nombre": "Archivo de imagen",
+        "descripcion": "Ruta para obtener cada imagen desde el almacenamiento en la nube"
       },
       {
-        "nombre": "Fecha",
-        "descripcion": "Consulta la fuente"
+        "nombre": "Cámara o sitio",
+        "descripcion": "Identificador del lugar donde se tomó la imagen"
       },
       {
-        "nombre": "Ubicación",
-        "descripcion": "Consulta la fuente"
+        "nombre": "Fecha y hora",
+        "descripcion": "Marca temporal; puede faltar o estar inferida"
+      },
+      {
+        "nombre": "Categoría",
+        "descripcion": "Especie o etiqueta, incluida la categoría «vacía»"
+      },
+      {
+        "nombre": "Cajas delimitadoras",
+        "descripcion": "Recuadros alrededor del animal en algunas imágenes"
+      },
+      {
+        "nombre": "Secuencia",
+        "descripcion": "Agrupación de imágenes en ráfagas; las etiquetas suelen ser por secuencia"
       }
     ],
     "usos": [
-      "Consulta la fuente"
+      "Entrenar y evaluar modelos de reconocimiento de especies en cámaras trampa.",
+      "Probar detectores de animales frente a conjuntos ya etiquetados.",
+      "Comparar el desempeño de un modelo entre regiones y condiciones de cámara."
     ],
     "foto": "/img/lila-bc.svg",
-    "credito": "Ilustración original del proyecto (provisional)"
+    "credito": "Ilustración original del proyecto"
   },
   {
     "id": "naturalista-mx",
@@ -333,22 +417,36 @@
     "fotoSugerida": "observador en campo",
     "campos": [
       {
-        "nombre": "Especie",
-        "descripcion": "Consulta la fuente"
+        "nombre": "Taxón",
+        "descripcion": "Especie identificada por la comunidad"
       },
       {
-        "nombre": "Fecha",
-        "descripcion": "Consulta la fuente"
+        "nombre": "Fecha de observación",
+        "descripcion": "Cuándo se registró"
       },
       {
         "nombre": "Ubicación",
-        "descripcion": "Consulta la fuente"
+        "descripcion": "Coordenadas y descripción del lugar"
+      },
+      {
+        "nombre": "Grado de calidad",
+        "descripcion": "Casual, necesita identificación o grado de investigación"
+      },
+      {
+        "nombre": "Fotos y sonidos",
+        "descripcion": "Evidencia que respalda cada observación"
+      },
+      {
+        "nombre": "Observador y licencia",
+        "descripcion": "Persona que aporta el registro y licencia que eligió"
       }
     ],
     "usos": [
-      "Consulta la fuente"
+      "Seguir la presencia de especies en México con evidencia verificable.",
+      "Detectar registros recientes de especies poco documentadas.",
+      "Apoyar listados locales de fauna con observaciones ciudadanas."
     ],
     "foto": "/img/naturalista-mx.svg",
-    "credito": "Ilustración original del proyecto (provisional)"
+    "credito": "Ilustración original del proyecto"
   }
 ]
