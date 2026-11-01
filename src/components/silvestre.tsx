@@ -111,7 +111,7 @@ export function Estado({ cargando, error }: { cargando: boolean; error: unknown 
     <div role="alert" className="card mx-auto my-16 max-w-lg p-6 text-center">
       <h2 className="text-xl text-tinta">No se pudieron cargar los datos</h2>
       <p className="mt-2 text-sm text-texto2">{error instanceof Error ? error.message : "Error desconocido"}</p>
-      <button type="button" onClick={() => location.reload()} className="btn-primario mt-4">Reintentar</button>
+      <button type="button" onClick={() => location.reload()} className={`${btnPrimario} mt-4`}>Reintentar</button>
     </div>
   );
 }

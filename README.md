@@ -1,29 +1,33 @@
-# Welcome to your Lovable project
+# Pulso Silvestre
 
-This project was built with [Lovable](https://lovable.dev).
+Ranking semanal de bases de datos abiertas de comportamiento y seguimiento de fauna silvestre. Proyecto académico con fines divulgativos.
 
-## Build with Lovable
+## Herramientas
+React 19, TypeScript, TanStack Router/Start, Tailwind CSS v4, zod. Construido con Lovable.
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+## Prompts utilizados
+Ver [docs/PROMPT_BASE.md](docs/PROMPT_BASE.md).
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+## URL pública
+[pendiente]
 
-## Development
+## Cómo actualizar los datos
+Todo el contenido vive en `public/data/`:
+- `grupos.json`: grupos animales (los 6 primeros por `orden` forman el panal).
+- `bases.json`: fichas de cada base.
+- `ranking/index.json`: semana más reciente (`ultima`) y lista de semanas.
+- `ranking/AAAA-Www.json`: ranking de una semana cerrada. Índice, posición y variación se calculan al generar el archivo, nunca en el navegador. Una semana cerrada no se modifica.
+- `historial.json`: consultas de las últimas 8 semanas por base.
+Para publicar una semana nueva: crea su archivo en `ranking/`, actualiza `index.json` y añade la semana al historial. Registra el cambio en `CHANGELOG.md`.
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+## Fuentes y licencias (datos ilustrativos)
+| Fuente | Licencia |
+|---|---|
+| eBird · Cornell Lab of Ornithology | Términos de eBird |
+| Movebank | Según el estudio |
+| GBIF · nodo México | Según el conjunto |
+| Xeno-canto | Creative Commons, según la grabación |
+| Wildlife Insights | Según el proyecto |
+| GloBI | Según el origen del dato |
+| LILA BC | Según el conjunto |
+| NaturaLista · CONABIO | Según el observador |
