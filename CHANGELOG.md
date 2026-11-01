@@ -10,4 +10,4 @@
 - 2026-11-01 — v2.1: se documentan las limitaciones del método (unidades distintas, cobertura, sesgos) en README, PROMPT_BASE (4.6) y la página de método.
 - 2026-11-01 — v2.2: se redefine el alcance: directorio de fuentes abiertas con pulso semanal de actividad (no ranking de consultas). Cambian título, navegación (Actividad semanal), descripciones, README y PROMPT_BASE.
 - 2026-11-01 — v2.3: nueva paleta azul y crema (#010736, #0D1C42, #22396F, #FCF1D0) en tokens, ilustraciones y documento base; verificado contraste AA.
-- 2026-11-01 — v2.4: Señales regionales interactivas (control de periodo, celdas y puntos exploráculos con cursor o teclado) con datos en public/data/senales.json; la prueba de filtros usa un ranking fijo.
+- 2026-11-01 — v2.4: Señales regionales interactivas (control de periodo, celdas y puntos explorables con cursor o teclado) con datos en public/data/senales.json; la prueba de filtros usa un ranking fijo.
