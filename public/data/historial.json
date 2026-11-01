@@ -8,6 +8,26 @@
   ],
   "naturalista-mx": [
     {
+      "semana": "2026-W39",
+      "inicio": "2026-09-21",
+      "consultas": 23705
+    },
+    {
+      "semana": "2026-W40",
+      "inicio": "2026-09-28",
+      "consultas": 19881
+    },
+    {
+      "semana": "2026-W41",
+      "inicio": "2026-10-05",
+      "consultas": 28644
+    },
+    {
+      "semana": "2026-W42",
+      "inicio": "2026-10-12",
+      "consultas": 31054
+    },
+    {
       "semana": "2026-W43",
       "inicio": "2026-10-19",
       "consultas": 22068
@@ -15,12 +35,52 @@
   ],
   "inat-abejas": [
     {
+      "semana": "2026-W39",
+      "inicio": "2026-09-21",
+      "consultas": 18348
+    },
+    {
+      "semana": "2026-W40",
+      "inicio": "2026-09-28",
+      "consultas": 15876
+    },
+    {
+      "semana": "2026-W41",
+      "inicio": "2026-10-05",
+      "consultas": 12349
+    },
+    {
+      "semana": "2026-W42",
+      "inicio": "2026-10-12",
+      "consultas": 9468
+    },
+    {
       "semana": "2026-W43",
       "inicio": "2026-10-19",
       "consultas": 9074
     }
   ],
   "inat-murcielagos": [
+    {
+      "semana": "2026-W39",
+      "inicio": "2026-09-21",
+      "consultas": 354
+    },
+    {
+      "semana": "2026-W40",
+      "inicio": "2026-09-28",
+      "consultas": 353
+    },
+    {
+      "semana": "2026-W41",
+      "inicio": "2026-10-05",
+      "consultas": 305
+    },
+    {
+      "semana": "2026-W42",
+      "inicio": "2026-10-12",
+      "consultas": 298
+    },
     {
       "semana": "2026-W43",
       "inicio": "2026-10-19",
