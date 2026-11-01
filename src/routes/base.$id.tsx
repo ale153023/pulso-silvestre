@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Chip, Estado, Foto, Variacion, btnContorno, btnPrimario, useIrASeccion } from "@/components/silvestre";
 import { cargarDatos, itemDe, type Datos } from "@/lib/data";
 import { etiquetaGrupos, relacionadas } from "@/lib/filtros";
-import { ACCESO, COBERTURA, METRICA, fmtCorta, fmtFecha, fmtNum } from "@/lib/formato";
+import { ACCESO, COBERTURA, METRICA, fmtCompacto, fmtCorta, fmtFecha, fmtNum, restarSemanas } from "@/lib/formato";
 
 export const Route = createFileRoute("/base/$id")({
   head: ({ loaderData, params }) => {
@@ -46,7 +46,9 @@ function Contenido({ d }: { d: Datos }) {
   const it = itemDe(d.ranking, b.id);
   const sinDato = !it || it.estado === "sin_dato";
   const serie = d.historial[b.id] ?? [];
-  const max = Math.max(1, ...serie.map((s) => s.consultas));
+  const visibles = serie.slice(-8);
+  const max = Math.max(1, ...visibles.map((s) => s.consultas));
+  const ranuras: (typeof serie[number] | undefined)[] = [...Array<undefined>(8 - visibles.length).fill(undefined), ...visibles];
   const rel = relacionadas(b, d.bases, d.ranking);
   const grupos = etiquetaGrupos(b.grupos, d.grupos);
 
@@ -88,15 +90,48 @@ function Contenido({ d }: { d: Datos }) {
               <ul className="sr-only">
                 {serie.map((s) => <li key={s.semana}>Semana del {fmtCorta(s.inicio)}: {fmtNum(s.consultas)} registros nuevos</li>)}
               </ul>
-              <div className="mt-4 flex h-48 items-end gap-2" aria-hidden="true">
-                {serie.map((s, i) => (
-                  <div key={s.semana} className="flex h-full flex-1 flex-col items-center justify-end gap-1">
-                    <span className="font-mono text-[10px] text-texto2">{fmtNum(s.consultas)}</span>
-                    <div className={`w-full rounded-t ${i === serie.length - 1 ? "bg-cafe" : "bg-rojo/60"}`} style={{ height: `${(s.consultas / max) * 75}%` }} />
-                    <span className="font-mono text-[10px] text-atenuado">{fmtCorta(s.inicio)}</span>
+              <div className="mt-6 grid grid-cols-[2.75rem_1fr] gap-x-2" aria-hidden="true">
+                <div className="relative h-44 text-right font-mono text-[10px] text-atenuado">
+                  <span className="absolute right-0 top-0 -translate-y-1/2">{fmtCompacto(max)}</span>
+                  <span className="absolute right-0 top-1/2 -translate-y-1/2">{fmtCompacto(max / 2)}</span>
+                  <span className="absolute bottom-0 right-0 translate-y-1/2">0</span>
+                </div>
+                <div className="relative h-44">
+                  <div className="absolute inset-x-0 top-0 border-t border-dashed border-border" />
+                  <div className="absolute inset-x-0 top-1/2 border-t border-dashed border-border" />
+                  <div className="absolute inset-x-0 bottom-0 border-t border-campo/40" />
+                  <div className="relative z-10 flex h-full items-end gap-2">
+                    {ranuras.map((s, i) => (
+                      <div key={i} className="flex h-full flex-1 items-end justify-center">
+                        {s ? (
+                          <div
+                            title={`${fmtNum(s.consultas)} registros nuevos`}
+                            className={`relative w-full max-w-12 rounded-t-md ${i === ranuras.length - 1 ? "bg-grad-cafe" : "bg-grad-rojo opacity-60"}`}
+                            style={{ height: `${Math.max(2, (s.consultas / max) * 100)}%` }}
+                          >
+                            <span className="absolute -top-5 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] text-texto2">{fmtCompacto(s.consultas)}</span>
+                          </div>
+                        ) : (
+                          <div className="w-full max-w-12 border-t-2 border-dashed border-border" />
+                        )}
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+                <div />
+                <div className="mt-2 flex gap-2">
+                  {ranuras.map((s, i) => (
+                    <span key={i} className={`flex-1 text-center font-mono text-[10px] ${s ? "text-atenuado" : "text-border"}`}>
+                      {fmtCorta(s ? s.inicio : restarSemanas(visibles[0]!.inicio, ranuras.length - visibles.length - i))}
+                    </span>
+                  ))}
+                </div>
               </div>
+              <p className="mt-3 text-xs text-atenuado">
+                {serie.length < 2
+                  ? "Primera semana con dato real. La tendencia aparecerá desde la segunda semana; las líneas punteadas son semanas aún sin registro."
+                  : "Registros nuevos por semana ISO; la barra oscura es la semana más reciente."}
+              </p>
               </>
             )}
           </section>
