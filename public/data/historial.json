@@ -12,5 +12,19 @@
       "inicio": "2026-10-19",
       "consultas": 22068
     }
+  ],
+  "inat-abejas": [
+    {
+      "semana": "2026-W43",
+      "inicio": "2026-10-19",
+      "consultas": 9074
+    }
+  ],
+  "inat-murcielagos": [
+    {
+      "semana": "2026-W43",
+      "inicio": "2026-10-19",
+      "consultas": 249
+    }
   ]
 }
