@@ -1,0 +1,338 @@
+[
+  {
+    "id": "ebird",
+    "nombre": "eBird Basic Dataset",
+    "fuente": "eBird · Cornell Lab of Ornithology",
+    "tipo": "Observaciones",
+    "grupos": [
+      "aves"
+    ],
+    "cobertura": "mundial",
+    "descripcion": "Listas de verificación de aves con fecha, lugar y esfuerzo de observación.",
+    "acceso": [
+      "api",
+      "descarga"
+    ],
+    "accesoTexto": "API con clave y descarga",
+    "licencia": "Términos de eBird",
+    "metrica": "vistas+descargas",
+    "actualizadoEn": "2026-10-24",
+    "url": "https://ebird.org/science",
+    "fotoSugerida": "ave en su hábitat",
+    "campos": [
+      {
+        "nombre": "Especie",
+        "descripcion": "Nombre común y científico de cada ave registrada"
+      },
+      {
+        "nombre": "Fecha y hora",
+        "descripcion": "Momento en que inició la lista"
+      },
+      {
+        "nombre": "Ubicación",
+        "descripcion": "Coordenadas y localidad"
+      },
+      {
+        "nombre": "Esfuerzo",
+        "descripcion": "Duración y distancia recorrida"
+      },
+      {
+        "nombre": "Conteo",
+        "descripcion": "Individuos por especie"
+      },
+      {
+        "nombre": "Observador",
+        "descripcion": "Identificador de quien aporta la lista"
+      }
+    ],
+    "usos": [
+      "Detectar llegadas y salidas de especies migratorias frente al promedio histórico.",
+      "Comparar la presencia de una especie entre regiones y temporadas.",
+      "Identificar celdas con registros nuevos que sugieran cambios de distribución."
+    ]
+  },
+  {
+    "id": "movebank",
+    "nombre": "Estudios públicos de movimiento animal",
+    "fuente": "Movebank",
+    "tipo": "Rastreo GPS",
+    "grupos": [
+      "aves",
+      "mamiferos",
+      "reptiles",
+      "peces"
+    ],
+    "cobertura": "mundial",
+    "descripcion": "Trayectorias de individuos rastreados, publicadas por equipos de investigación.",
+    "acceso": [
+      "api",
+      "descarga"
+    ],
+    "accesoTexto": "API y descarga",
+    "licencia": "Según el estudio",
+    "metrica": "vistas+descargas",
+    "actualizadoEn": "2026-10-22",
+    "url": "https://www.movebank.org",
+    "fotoSugerida": "animal con collar GPS",
+    "campos": [
+      {
+        "nombre": "Especie",
+        "descripcion": "Consulta la fuente"
+      },
+      {
+        "nombre": "Fecha",
+        "descripcion": "Consulta la fuente"
+      },
+      {
+        "nombre": "Ubicación",
+        "descripcion": "Consulta la fuente"
+      }
+    ],
+    "usos": [
+      "Consulta la fuente"
+    ]
+  },
+  {
+    "id": "gbif-mx",
+    "nombre": "Registros de fauna de México",
+    "fuente": "GBIF · nodo México",
+    "tipo": "Observaciones",
+    "grupos": [
+      "aves",
+      "mamiferos",
+      "reptiles",
+      "anfibios",
+      "peces",
+      "insectos"
+    ],
+    "cobertura": "mexico",
+    "descripcion": "Ocurrencias de especies con coordenadas, fecha y fuente institucional.",
+    "acceso": [
+      "api",
+      "descarga"
+    ],
+    "accesoTexto": "API y descarga",
+    "licencia": "Según el conjunto",
+    "metrica": "vistas+descargas",
+    "actualizadoEn": "2026-10-20",
+    "url": "https://www.gbif.org",
+    "fotoSugerida": "fauna endémica de México",
+    "campos": [
+      {
+        "nombre": "Especie",
+        "descripcion": "Consulta la fuente"
+      },
+      {
+        "nombre": "Fecha",
+        "descripcion": "Consulta la fuente"
+      },
+      {
+        "nombre": "Ubicación",
+        "descripcion": "Consulta la fuente"
+      }
+    ],
+    "usos": [
+      "Consulta la fuente"
+    ]
+  },
+  {
+    "id": "xeno-canto",
+    "nombre": "Grabaciones de vocalizaciones",
+    "fuente": "Xeno-canto",
+    "tipo": "Audio",
+    "grupos": [
+      "aves"
+    ],
+    "cobertura": "mundial",
+    "descripcion": "Cantos y llamados con ubicación y tipo de vocalización.",
+    "acceso": [
+      "api"
+    ],
+    "accesoTexto": "API",
+    "licencia": "Creative Commons, según la grabación",
+    "metrica": "vistas+descargas",
+    "actualizadoEn": "2026-10-23",
+    "url": "https://xeno-canto.org",
+    "fotoSugerida": "ave cantando",
+    "campos": [
+      {
+        "nombre": "Especie",
+        "descripcion": "Consulta la fuente"
+      },
+      {
+        "nombre": "Fecha",
+        "descripcion": "Consulta la fuente"
+      },
+      {
+        "nombre": "Ubicación",
+        "descripcion": "Consulta la fuente"
+      }
+    ],
+    "usos": [
+      "Consulta la fuente"
+    ]
+  },
+  {
+    "id": "wildlife-insights",
+    "nombre": "Cámaras trampa de fauna silvestre",
+    "fuente": "Wildlife Insights",
+    "tipo": "Cámaras trampa",
+    "grupos": [
+      "mamiferos",
+      "aves"
+    ],
+    "cobertura": "mundial",
+    "descripcion": "Proyectos de monitoreo con imágenes y detecciones de fauna terrestre.",
+    "acceso": [
+      "descarga"
+    ],
+    "accesoTexto": "Descarga",
+    "licencia": "Según el proyecto",
+    "metrica": "vistas+descargas",
+    "actualizadoEn": "2026-10-15",
+    "url": "https://www.wildlifeinsights.org",
+    "fotoSugerida": "fauna en cámara trampa",
+    "campos": [
+      {
+        "nombre": "Especie",
+        "descripcion": "Consulta la fuente"
+      },
+      {
+        "nombre": "Fecha",
+        "descripcion": "Consulta la fuente"
+      },
+      {
+        "nombre": "Ubicación",
+        "descripcion": "Consulta la fuente"
+      }
+    ],
+    "usos": [
+      "Consulta la fuente"
+    ]
+  },
+  {
+    "id": "globi",
+    "nombre": "Interacciones entre especies",
+    "fuente": "GloBI · Global Biotic Interactions",
+    "tipo": "Interacciones",
+    "grupos": [
+      "aves",
+      "mamiferos",
+      "reptiles",
+      "anfibios",
+      "peces",
+      "insectos"
+    ],
+    "cobertura": "mundial",
+    "descripcion": "Depredación, polinización y parasitismo documentados entre especies.",
+    "acceso": [
+      "api",
+      "descarga"
+    ],
+    "accesoTexto": "API y descarga",
+    "licencia": "Según el origen del dato",
+    "metrica": "vistas+descargas",
+    "actualizadoEn": "2026-10-10",
+    "url": "https://www.globalbioticinteractions.org",
+    "fotoSugerida": "polinizador en una flor",
+    "campos": [
+      {
+        "nombre": "Especie",
+        "descripcion": "Consulta la fuente"
+      },
+      {
+        "nombre": "Fecha",
+        "descripcion": "Consulta la fuente"
+      },
+      {
+        "nombre": "Ubicación",
+        "descripcion": "Consulta la fuente"
+      }
+    ],
+    "usos": [
+      "Consulta la fuente"
+    ]
+  },
+  {
+    "id": "lila-bc",
+    "nombre": "Conjuntos de imágenes de cámaras trampa",
+    "fuente": "LILA BC",
+    "tipo": "Cámaras trampa",
+    "grupos": [
+      "mamiferos",
+      "aves",
+      "reptiles"
+    ],
+    "cobertura": "mundial",
+    "descripcion": "Colecciones etiquetadas de imágenes de cámaras trampa de varias regiones.",
+    "acceso": [
+      "descarga"
+    ],
+    "accesoTexto": "Descarga",
+    "licencia": "Según el conjunto",
+    "metrica": "vistas+descargas",
+    "actualizadoEn": "2026-09-30",
+    "url": "https://lila.science",
+    "fotoSugerida": "mamífero en cámara trampa",
+    "campos": [
+      {
+        "nombre": "Especie",
+        "descripcion": "Consulta la fuente"
+      },
+      {
+        "nombre": "Fecha",
+        "descripcion": "Consulta la fuente"
+      },
+      {
+        "nombre": "Ubicación",
+        "descripcion": "Consulta la fuente"
+      }
+    ],
+    "usos": [
+      "Consulta la fuente"
+    ]
+  },
+  {
+    "id": "naturalista-mx",
+    "nombre": "Observaciones con evidencia en México",
+    "fuente": "NaturaLista · CONABIO",
+    "tipo": "Observaciones",
+    "grupos": [
+      "aves",
+      "mamiferos",
+      "reptiles",
+      "anfibios",
+      "peces",
+      "insectos"
+    ],
+    "cobertura": "mexico",
+    "descripcion": "Registros ciudadanos con foto o audio, etapa de vida y sexo cuando se anotan.",
+    "acceso": [
+      "api",
+      "descarga"
+    ],
+    "accesoTexto": "API y descarga",
+    "licencia": "Según el observador",
+    "metrica": "vistas+descargas",
+    "actualizadoEn": "2026-10-25",
+    "url": "https://www.naturalista.mx",
+    "fotoSugerida": "observador en campo",
+    "campos": [
+      {
+        "nombre": "Especie",
+        "descripcion": "Consulta la fuente"
+      },
+      {
+        "nombre": "Fecha",
+        "descripcion": "Consulta la fuente"
+      },
+      {
+        "nombre": "Ubicación",
+        "descripcion": "Consulta la fuente"
+      }
+    ],
+    "usos": [
+      "Consulta la fuente"
+    ]
+  }
+]

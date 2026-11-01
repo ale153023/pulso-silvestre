@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DirectorioRouteImport } from './routes/directorio'
+import { Route as BaseIdRouteImport } from './routes/base.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DirectorioRoute = DirectorioRouteImport.update({
+  id: '/directorio',
+  path: '/directorio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BaseIdRoute = BaseIdRouteImport.update({
+  id: '/base/$id',
+  path: '/base/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/directorio': typeof DirectorioRoute
+  '/base/$id': typeof BaseIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/directorio': typeof DirectorioRoute
+  '/base/$id': typeof BaseIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/directorio': typeof DirectorioRoute
+  '/base/$id': typeof BaseIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/directorio' | '/base/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/directorio' | '/base/$id'
+  id: '__root__' | '/' | '/directorio' | '/base/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DirectorioRoute: typeof DirectorioRoute
+  BaseIdRoute: typeof BaseIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/directorio': {
+      id: '/directorio'
+      path: '/directorio'
+      fullPath: '/directorio'
+      preLoaderRoute: typeof DirectorioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/base/$id': {
+      id: '/base/$id'
+      path: '/base/$id'
+      fullPath: '/base/$id'
+      preLoaderRoute: typeof BaseIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DirectorioRoute: DirectorioRoute,
+  BaseIdRoute: BaseIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
