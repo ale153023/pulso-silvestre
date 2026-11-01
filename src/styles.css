@@ -52,25 +52,25 @@
 
 :root {
   --radius: 0.75rem;
-  --cafe: #60241e;
-  --cafe-oscuro: #4e1c17;
-  --ladrillo: #95271d;
-  --rojo: #b34a44;
-  --naranja: #e77b49;
+  --cafe: #0d1c42;
+  --cafe-oscuro: #010736;
+  --ladrillo: #0d1c42;
+  --rojo: #22396f;
+  --naranja: #fcf1d0;
   --lima: #a1cb35;
   --lima-claro: #e6f3c2;
   --oliva: #769826;
   --oliva-oscuro: #4b6310;
-  --tinta: #2b120e;
-  --texto2: #4a2019;
-  --atenuado: #6e3b31;
-  --durazno: #fbd8c4;
-  --tinte: #fbe9e0;
-  --campo: #a8624a;
-  --pista: #f1ddd2;
+  --tinta: #0a1230;
+  --texto2: #1f2e57;
+  --atenuado: #4a5880;
+  --durazno: #fcf1d0;
+  --tinte: #f6efd6;
+  --campo: #5a6b99;
+  --pista: #e6dfc3;
   --blanco: #ffffff;
 
-  --background: #fff6f0;
+  --background: #fefaec;
   --foreground: var(--tinta);
   --card: #ffffff;
   --card-foreground: var(--tinta);
@@ -86,23 +86,23 @@
   --accent-foreground: var(--cafe);
   --destructive: var(--ladrillo);
   --destructive-foreground: #ffffff;
-  --border: #ebd2c8;
+  --border: #e3dbbe;
   --input: var(--campo);
   --ring: var(--cafe);
 
-  --grad-cafe: linear-gradient(180deg, #7a2e24, #60241e);
+  --grad-cafe: linear-gradient(180deg, #1a2f63, #0d1c42);
   --grad-lima: linear-gradient(180deg, #b0d646, #94bc29);
-  --grad-naranja: linear-gradient(180deg, #ee8a58, #dc6e3e);
-  --grad-rojo: linear-gradient(180deg, #bc534c, #a14039);
+  --grad-naranja: linear-gradient(180deg, #fff6dc, #f3e4b0);
+  --grad-rojo: linear-gradient(180deg, #2d4a8c, #22396f);
   --grad-oliva: linear-gradient(180deg, #84a830, #769826);
-  --grad-header: linear-gradient(120deg, #4e1c17, #60241e 45%, #7b2e22);
-  --grad-footer: linear-gradient(120deg, #4e1c17, #60241e, #6e281f);
-  --grad-foto: linear-gradient(135deg, #fff1e8, #f6d9c9);
-  --shadow-card: 0 1px 2px rgba(60, 28, 20, 0.06), 0 14px 30px -16px rgba(60, 28, 20, 0.3);
-  --shadow-header: 0 6px 18px -10px rgba(43, 18, 14, 0.55);
-  --shadow-btn: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 6px 14px -8px rgba(78, 28, 23, 0.7);
-  --footer-border: rgba(231, 123, 73, 0.35);
-  --halo: radial-gradient(closest-side, rgba(231, 123, 73, 0.22), rgba(231, 123, 73, 0));
+  --grad-header: linear-gradient(120deg, #010736, #0d1c42 45%, #22396f);
+  --grad-footer: linear-gradient(120deg, #010736, #0d1c42, #162a5c);
+  --grad-foto: linear-gradient(135deg, #fefaec, #f1e6bd);
+  --shadow-card: 0 1px 2px rgba(13, 28, 66, 0.06), 0 14px 30px -16px rgba(13, 28, 66, 0.3);
+  --shadow-header: 0 6px 18px -10px rgba(1, 7, 54, 0.55);
+  --shadow-btn: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 6px 14px -8px rgba(1, 7, 54, 0.7);
+  --footer-border: rgba(252, 241, 208, 0.35);
+  --halo: radial-gradient(closest-side, rgba(34, 57, 111, 0.18), rgba(34, 57, 111, 0));
 }
 
 @utility bg-grad-cafe { background-image: var(--grad-cafe); }
@@ -130,7 +130,7 @@
   * { border-color: var(--color-border); }
   html { background: var(--background); }
   body {
-    background: linear-gradient(180deg, #ffefe3 0, var(--background) 420px);
+    background: linear-gradient(180deg, #fcf1d0 0, var(--background) 420px);
     color: var(--foreground);
     font-family: var(--font-sans);
     overflow-x: hidden;

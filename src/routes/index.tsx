@@ -77,7 +77,7 @@ function Panal({ grupos }: { grupos: Grupo[] }) {
     );
   };
   return (
-    <nav aria-label="Grupos animales" className="relative mx-auto mt-10 flex flex-col items-center" style={{ filter: "drop-shadow(0 10px 14px rgba(60,28,20,.25))" }}>
+    <nav aria-label="Grupos animales" className="relative mx-auto mt-10 flex flex-col items-center" style={{ filter: "drop-shadow(0 10px 14px rgba(13,28,66,.25))" }}>
       {filas.map((f, i) => (
         <div key={i} className="flex gap-2" style={i > 0 ? ({ marginTop: `calc(${w} * -0.2887 + 7px)` } as CSSProperties) : undefined}>
           {f.map(hex)}

@@ -9,3 +9,4 @@
 - 2026-11-01 — v2.0: método v2: el ranking usa actividad semanal (registros nuevos) con datos reales de GBIF, NaturaLista y eBird; script generar_ranking.py y flujo semanal en GitHub Actions; textos «consultas» pasan a «actividad».
 - 2026-11-01 — v2.1: se documentan las limitaciones del método (unidades distintas, cobertura, sesgos) en README, PROMPT_BASE (4.6) y la página de método.
 - 2026-11-01 — v2.2: se redefine el alcance: directorio de fuentes abiertas con pulso semanal de actividad (no ranking de consultas). Cambian título, navegación (Actividad semanal), descripciones, README y PROMPT_BASE.
+- 2026-11-01 — v2.3: nueva paleta azul y crema (#010736, #0D1C42, #22396F, #FCF1D0) en tokens, ilustraciones y documento base; verificado contraste AA.
