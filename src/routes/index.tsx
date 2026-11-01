@@ -8,10 +8,10 @@ import type { Cobertura } from "@/lib/data";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Pulso Silvestre · Ranking semanal de datos de fauna" },
-      { name: "description", content: "Las bases de datos abiertas de comportamiento y seguimiento de fauna silvestre con más actividad esta semana." },
-      { property: "og:title", content: "Pulso Silvestre · Ranking semanal" },
-      { property: "og:description", content: "Ranking semanal de bases de datos abiertas de fauna silvestre, construido solo con fuentes abiertas." },
+      { title: "Pulso Silvestre · Bases de datos abiertas de fauna y su actividad semanal" },
+      { name: "description", content: "Directorio de bases de datos abiertas de fauna silvestre, con la actividad semanal de registros nuevos de las fuentes que la publican." },
+      { property: "og:title", content: "Pulso Silvestre · Actividad semanal" },
+      { property: "og:description", content: "Directorio de bases de datos abiertas de fauna silvestre y su actividad semanal, construido solo con fuentes abiertas." },
     ],
   }),
   loader: () => cargarDatos(),
@@ -35,8 +35,8 @@ function Contenido({ d }: { d: Datos }) {
             <span className="bg-lima mb-4 inline-block rounded-full px-3 py-1 text-xs font-semibold text-tinta">Datos ilustrativos</span>
           )}
           <p className="font-mono text-xs uppercase tracking-widest text-atenuado">{ranking.semana.etiqueta} · {ranking.semana.id}</p>
-          <h1 className="mt-3 text-tinta">Bases de datos de fauna silvestre con más actividad esta semana</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-texto2">Ranking construido solo con fuentes abiertas. Elige un grupo en el panal para explorar su directorio.</p>
+          <h1 className="mt-3 text-tinta">Directorio de bases de datos abiertas de fauna silvestre y su actividad semanal</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-texto2">Fuentes abiertas de observación, rastreo y audio de fauna, con un pulso semanal de registros nuevos en las que lo publican. Elige un grupo en el panal para explorar su directorio.</p>
         </div>
         <Panal grupos={d.grupos} />
       </section>
@@ -130,9 +130,9 @@ function Carrusel({ d }: { d: Datos }) {
     .sort((a, b) => (a.posicion ?? 0) - (b.posicion ?? 0));
   return (
     <section className="mx-auto mt-12 max-w-6xl px-4" aria-labelledby="t-carrusel">
-      <h2 id="t-carrusel" className="text-2xl text-tinta">Lo más activo esta semana</h2>
+      <h2 id="t-carrusel" className="text-2xl text-tinta">Más actividad esta semana</h2>
       <p className="mt-1 text-sm text-atenuado">Desliza para ver más → · Índice 100 = la más activa de la semana</p>
-      <div role="region" aria-label="Carrusel del ranking semanal" tabIndex={0} className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4">
+      <div role="region" aria-label="Carrusel de actividad semanal" tabIndex={0} className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4">
         {items.map((it) => {
           const b = d.bases.find((x) => x.id === it.baseId);
           if (!b) return null;
@@ -190,7 +190,7 @@ function Senales() {
   return (
     <section className="mx-auto mt-16 max-w-5xl px-4" aria-labelledby="t-senales">
       <h2 id="t-senales" className="text-2xl text-tinta">Señales regionales</h2>
-      <p className="mt-1 text-sm text-atenuado">Tipos de señal que el ranking permitirá seguir por región.</p>
+      <p className="mt-1 text-sm text-atenuado">Tipos de señal que este pulso semanal permitirá seguir por región.</p>
       <div className="mt-4 grid gap-4 md:grid-cols-3">
         <figure className="card p-4">
           <figcaption className="font-semibold text-tinta">Fenología</figcaption>

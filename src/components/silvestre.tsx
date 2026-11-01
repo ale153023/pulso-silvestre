@@ -47,7 +47,7 @@ export function Encabezado() {
           <span className="text-lg font-semibold">Pulso Silvestre</span>
         </Link>
         <nav aria-label="Principal" className="flex flex-wrap gap-1">
-          <Link to="/" className={activo(path === "/")}>Ranking semanal</Link>
+          <Link to="/" className={activo(path === "/")}>Actividad semanal</Link>
           <Link to="/directorio" className={activo(path.startsWith("/directorio") || path.startsWith("/base"))}>Directorio</Link>
           <button type="button" onClick={() => ir("metodo")} className={activo(false)}>Metodología</button>
         </nav>

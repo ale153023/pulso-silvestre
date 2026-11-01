@@ -48,7 +48,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Pulso Silvestre" },
-      { name: "description", content: "Ranking semanal de bases de datos abiertas de fauna silvestre." },
+      { name: "description", content: "Directorio de bases de datos abiertas de fauna silvestre y su actividad semanal (registros nuevos)." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

@@ -1,6 +1,8 @@
 # Pulso Silvestre
 
-Ranking semanal de bases de datos abiertas de comportamiento y seguimiento de fauna silvestre. Proyecto académico con fines divulgativos.
+Directorio de bases de datos abiertas de fauna silvestre (observación, rastreo, audio, cámaras trampa e interacciones) con un **pulso semanal de actividad**: cuántos registros nuevos publican, esa semana, las fuentes que lo permiten mediante API abierta. No mide cuántas personas consultan cada base. Proyecto académico con fines divulgativos.
+
+**Alcance.** Para estudiantes, investigadores, gestores de conservación y divulgadores que dan seguimiento a la vida silvestre, principalmente en México y abierto a cualquier grupo animal. Ayuda a encontrar qué fuentes existen, con qué licencia y cómo citarlas, y a ver cuáles muestran más movimiento esta semana. No es un indicador de importancia, calidad ni abundancia de fauna (ver «Limitaciones conocidas»).
 
 ## Herramientas
 React 19, TypeScript, TanStack Router/Start, Tailwind CSS v4, zod. Construido con Lovable.
@@ -34,10 +36,10 @@ Para generarlo localmente: `python scripts/generar_ranking.py` (o `--semana 2026
 ## Limitaciones conocidas
 Estas limitaciones también se resumen en `docs/PROMPT_BASE.md` (sección 4.6) para que cualquier cambio futuro las respete.
 
-1. **Mide aportes, no consultas.** Ninguna de las 8 bases publica vistas o descargas semanales. El ranking refleja cuántos registros nuevos entran a cada fuente, no cuánta gente la usa.
+1. **Mide aportes, no consultas.** Ninguna de las 8 bases publica vistas o descargas semanales. El pulso semanal refleja cuántos registros nuevos entran a cada fuente, no cuánta gente la usa.
 2. **Las unidades no son iguales.** eBird cuenta listas de verificación; NaturaLista, observaciones; GBIF, ocurrencias. Una lista de eBird puede contener decenas de registros de especies. Por eso el índice (100 × actividad ÷ líder) solo sirve para ordenar y comparar dentro de una misma semana y **no** indica qué fuente es más importante ni más grande. Decisión vigente: mantener las unidades propias de cada fuente y declararlo; la alternativa evaluada (índice relativo a la mediana de cada fuente) queda como mejora futura porque necesita 4 semanas acumuladas.
 3. **Las fuentes no son independientes.** Parte de lo que publica eBird y NaturaLista llega también a GBIF, de modo que sus conteos se solapan y no deben sumarse.
-4. **Cobertura parcial.** Con los datos disponibles hoy el ranking incluye como máximo 3 de 8 bases (GBIF México, NaturaLista y eBird, esta última solo con clave). Xeno-canto está pendiente de conectar; Movebank, Wildlife Insights, GloBI y LILA BC no tienen métrica pública abierta y aparecen como «Sin dato esta semana».
+4. **Cobertura parcial.** Con los datos disponibles hoy el pulso semanal incluye como máximo 3 de 8 bases (GBIF México, NaturaLista y eBird, esta última solo con clave). Xeno-canto está pendiente de conectar; Movebank, Wildlife Insights, GloBI y LILA BC no tienen métrica pública abierta y aparecen como «Sin dato esta semana».
 5. **GBIF puede dar picos artificiales.** Se cuenta la fecha en que GBIF interpretó cada registro; si reprocesa un conjunto grande, el conteo se dispara sin que haya más actividad. Esos casos (más de 5 veces la semana previa) se marcan como `anomalia` y se muestran con «—». Además, consultar después una semana pasada puede dar otra cifra, por eso cada semana se guarda al cerrarse y no se recalcula.
 6. **NaturaLista:** se cuentan observaciones de fauna creadas en México (lugar 6793 de la red iNaturalist); las eliminadas u ocultadas después no se descuentan de semanas ya cerradas.
 7. **eBird:** exige clave personal y cuenta listas enviadas, no especies ni individuos. Sin la clave queda como «Sin dato».

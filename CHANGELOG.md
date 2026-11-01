@@ -8,3 +8,4 @@
 - 2026-11-01 — v1.5: se quitan las leyendas «(ejemplo)» de las tarjetas de Señales regionales.
 - 2026-11-01 — v2.0: método v2: el ranking usa actividad semanal (registros nuevos) con datos reales de GBIF, NaturaLista y eBird; script generar_ranking.py y flujo semanal en GitHub Actions; textos «consultas» pasan a «actividad».
 - 2026-11-01 — v2.1: se documentan las limitaciones del método (unidades distintas, cobertura, sesgos) en README, PROMPT_BASE (4.6) y la página de método.
+- 2026-11-01 — v2.2: se redefine el alcance: directorio de fuentes abiertas con pulso semanal de actividad (no ranking de consultas). Cambian título, navegación (Actividad semanal), descripciones, README y PROMPT_BASE.
