@@ -1,0 +1,118 @@
+{
+  "semana": {
+    "id": "2026-W47",
+    "inicio": "2026-11-16",
+    "fin": "2026-11-22",
+    "etiqueta": "Semana del 16 al 22 de noviembre de 2026"
+  },
+  "metodoVersion": 3,
+  "cerrada": true,
+  "datosIlustrativos": false,
+  "generadoEn": "2026-11-23T23:54:45Z",
+  "items": [
+    {
+      "baseId": "inat-murcielagos",
+      "posicion": 1,
+      "consultas": 277,
+      "indice": 114,
+      "variacionPct": 18,
+      "estado": "ok"
+    },
+    {
+      "baseId": "naturalista-mx",
+      "posicion": 2,
+      "consultas": 21342,
+      "indice": 100,
+      "variacionPct": 1,
+      "estado": "ok"
+    },
+    {
+      "baseId": "inat-abejas",
+      "posicion": 3,
+      "consultas": 3685,
+      "indice": 56,
+      "variacionPct": -19,
+      "estado": "ok"
+    },
+    {
+      "baseId": "gbif-mx",
+      "posicion": null,
+      "consultas": 3739818,
+      "indice": null,
+      "variacionPct": null,
+      "estado": "nuevo"
+    },
+    {
+      "baseId": "ebird",
+      "posicion": null,
+      "consultas": null,
+      "indice": null,
+      "variacionPct": null,
+      "estado": "sin_dato"
+    },
+    {
+      "baseId": "movebank",
+      "posicion": null,
+      "consultas": null,
+      "indice": null,
+      "variacionPct": null,
+      "estado": "sin_dato"
+    },
+    {
+      "baseId": "xeno-canto",
+      "posicion": null,
+      "consultas": null,
+      "indice": null,
+      "variacionPct": null,
+      "estado": "sin_dato"
+    },
+    {
+      "baseId": "wildlife-insights",
+      "posicion": null,
+      "consultas": null,
+      "indice": null,
+      "variacionPct": null,
+      "estado": "sin_dato"
+    },
+    {
+      "baseId": "globi",
+      "posicion": null,
+      "consultas": null,
+      "indice": null,
+      "variacionPct": null,
+      "estado": "sin_dato"
+    },
+    {
+      "baseId": "lila-bc",
+      "posicion": null,
+      "consultas": null,
+      "indice": null,
+      "variacionPct": null,
+      "estado": "sin_dato"
+    },
+    {
+      "baseId": "nabat",
+      "posicion": null,
+      "consultas": null,
+      "indice": null,
+      "variacionPct": null,
+      "estado": "sin_dato"
+    },
+    {
+      "baseId": "bumble-bee-watch",
+      "posicion": null,
+      "consultas": null,
+      "indice": null,
+      "variacionPct": null,
+      "estado": "sin_dato"
+    },
+    {
+      "baseId": "biml",
+      "posicion": null,
+      "consultas": null,
+      "indice": null,
+      "variacionPct": null,
+      "estado": "sin_dato"
+    }
+  ]
+}

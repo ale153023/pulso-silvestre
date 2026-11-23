@@ -9,14 +9,14 @@
       "semana": "2026-W44",
       "inicio": "2026-10-26",
       "consultas": 18468770
+    },
+    {
+      "semana": "2026-W47",
+      "inicio": "2026-11-16",
+      "consultas": 3739818
     }
   ],
   "naturalista-mx": [
-    {
-      "semana": "2026-W39",
-      "inicio": "2026-09-21",
-      "consultas": 23705
-    },
     {
       "semana": "2026-W40",
       "inicio": "2026-09-28",
@@ -41,14 +41,24 @@
       "semana": "2026-W44",
       "inicio": "2026-10-26",
       "consultas": 20326
+    },
+    {
+      "semana": "2026-W45",
+      "inicio": "2026-11-02",
+      "consultas": 21722
+    },
+    {
+      "semana": "2026-W46",
+      "inicio": "2026-11-09",
+      "consultas": 21042
+    },
+    {
+      "semana": "2026-W47",
+      "inicio": "2026-11-16",
+      "consultas": 21342
     }
   ],
   "inat-abejas": [
-    {
-      "semana": "2026-W39",
-      "inicio": "2026-09-21",
-      "consultas": 18348
-    },
     {
       "semana": "2026-W40",
       "inicio": "2026-09-28",
@@ -73,14 +83,24 @@
       "semana": "2026-W44",
       "inicio": "2026-10-26",
       "consultas": 7722
+    },
+    {
+      "semana": "2026-W45",
+      "inicio": "2026-11-02",
+      "consultas": 5473
+    },
+    {
+      "semana": "2026-W46",
+      "inicio": "2026-11-09",
+      "consultas": 4546
+    },
+    {
+      "semana": "2026-W47",
+      "inicio": "2026-11-16",
+      "consultas": 3685
     }
   ],
   "inat-murcielagos": [
-    {
-      "semana": "2026-W39",
-      "inicio": "2026-09-21",
-      "consultas": 354
-    },
     {
       "semana": "2026-W40",
       "inicio": "2026-09-28",
@@ -105,6 +125,21 @@
       "semana": "2026-W44",
       "inicio": "2026-10-26",
       "consultas": 206
+    },
+    {
+      "semana": "2026-W45",
+      "inicio": "2026-11-02",
+      "consultas": 299
+    },
+    {
+      "semana": "2026-W46",
+      "inicio": "2026-11-09",
+      "consultas": 235
+    },
+    {
+      "semana": "2026-W47",
+      "inicio": "2026-11-16",
+      "consultas": 277
     }
   ]
 }
